@@ -1,0 +1,48 @@
+.register-choice-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;   /* centers vertically */
+  align-items: center;       /* centers horizontally */
+  height: 100vh;             /* full screen height */
+  text-align: center;
+  background-color: #f5f8fa; /* soft neutral tone */
+  font-family: 'Poppins', sans-serif;
+}
+
+.register-choice-container h1 {
+  font-size: 2rem;
+  color: #2c3e50;
+  margin-bottom: 10px;
+}
+
+.register-choice-container p {
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.role-buttons {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.role-buttons button {
+  padding: 10px 18px;
+  font-size: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.role-buttons button:hover {
+  background: #f0f0f0;
+  border-color: #aaa;
+}
+
+.login-link {
+  margin-top: 10px;
+  color: #555;
+  font-size: 14px;
+}

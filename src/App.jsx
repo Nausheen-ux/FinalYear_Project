@@ -10,6 +10,8 @@ import RentPage from "./components/RentPage";
 import RentResult from './components/RentResult';
 import ParttimeJob from "./components/ParttimeJob";
 import JobResults from "./components/JobResults";
+import RegisterStudent from "./components/RegisterStudent";
+import RegisterLandlord from "./components/RegisterLandlord";
 
 export default function App() {
   
@@ -87,6 +89,8 @@ export default function App() {
         path="/ParttimeJob"
         element={loggedInUser ? <ParttimeJob user={loggedInUser} /> : <Navigate to="/login" />}
       />
+       <Route path="/register/student" element={<RegisterStudent />} />
+       <Route path="/register/landlord" element={<RegisterLandlord />} />
       <Route
         path="/job-results"
         element={loggedInUser ? <JobResults /> : <Navigate to="/login" />}
