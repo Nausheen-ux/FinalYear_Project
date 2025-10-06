@@ -39,7 +39,7 @@ export default function LandlordRegister() {
             />
           </div>
 
-          <div>
+          {/* <div>
             <label className="block font-medium text-gray-700">
               Property Name
             </label>
@@ -48,11 +48,11 @@ export default function LandlordRegister() {
               placeholder="Enter property name"
               className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-green-400"
             />
-          </div>
+          </div> */}
 
           <div>
             <label className="block font-medium text-gray-700">
-              Upload Ownership Proof (image or PDF)
+              Upload Identity Proof (Any Goverment Identity) (image or PDF)
             </label>
             <input
               type="file"
