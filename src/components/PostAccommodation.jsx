@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom"; // ✅ Import Link for navigation
+import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import axios from "axios";
 
 export default function PostAccommodation() {
   const [formData, setFormData] = useState({
+    fullName: "",
     city: "",
     propertyType: "",
     buildingName: "",
@@ -19,8 +21,8 @@ export default function PostAccommodation() {
   });
 
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
 
-  // Handle form changes
   const handleChange = (e) => {
     const { name, value, type, checked, files } = e.target;
     if (type === "checkbox") {
@@ -41,7 +43,6 @@ export default function PostAccommodation() {
     }
   };
 
-  // College input change
   const handleCollegeChange = (index, e) => {
     const { name, value } = e.target;
     const updatedColleges = [...formData.colleges];
@@ -49,7 +50,6 @@ export default function PostAccommodation() {
     setFormData({ ...formData, colleges: updatedColleges });
   };
 
-  // Add new college field
   const addCollege = () => {
     setFormData({
       ...formData,
@@ -57,19 +57,16 @@ export default function PostAccommodation() {
     });
   };
 
-  // Remove a college entry
   const removeCollege = (index) => {
     const updatedColleges = formData.colleges.filter((_, i) => i !== index);
     setFormData({ ...formData, colleges: updatedColleges });
   };
 
-  // Remove image
   const removeImage = (index) => {
     const updatedImages = formData.images.filter((_, i) => i !== index);
     setFormData({ ...formData, images: updatedImages });
   };
 
-  // Validation
   const validate = () => {
     let tempErrors = {};
     const mobileRegex = /^[0-9]{10}$/;
@@ -85,11 +82,61 @@ export default function PostAccommodation() {
     return Object.keys(tempErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validate()) return;
-    console.log(formData);
-    alert("Accommodation posted successfully!");
+
+    try {
+      setLoading(true);
+      const data = new FormData();
+      data.append("fullName", formData.fullName);
+      data.append("city", formData.city);
+      data.append("propertyType", formData.propertyType);
+      data.append("buildingName", formData.buildingName);
+      data.append("address", formData.address);
+      data.append("furnishType", formData.furnishType);
+      data.append("price", formData.price);
+      data.append("mobile", formData.mobile);
+      data.append("email", formData.email);
+      const ownerId = localStorage.getItem("userId");
+ data.append("ownerId", ownerId); // replace with actual logged-in user ID
+      data.append("roomType", JSON.stringify(formData.roomType));
+      data.append("colleges", JSON.stringify(formData.colleges));
+      formData.images.forEach((file) => {
+        data.append("images", file);
+      });
+
+      const response = await axios.post(
+        "http://localhost:5000/api/accommodation",
+        data,
+        { headers: { "Content-Type": "multipart/form-data" } }
+      );
+
+      alert(response.data.message);
+
+      // Reset form
+      setFormData({
+        fullName: "",
+        city: "",
+        propertyType: "",
+        buildingName: "",
+        address: "",
+        roomType: [],
+        furnishType: "",
+        price: "",
+        mobile: "",
+        email: "",
+        images: [],
+        colleges: [{ name: "", distance: "" }],
+      });
+    } catch (error) {
+      console.error("Error posting accommodation:", error);
+      alert(
+        error.response?.data?.message || "Error posting accommodation. Try again."
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -103,60 +150,55 @@ export default function PostAccommodation() {
     >
       {/* Navbar */}
       <nav
-        className="navbar navbar-expand-lg navbar-dark"
-        style={{ backgroundColor: "#5a2ca0" }}
-      >
-        <div className="container-fluid">
-          <Link className="navbar-brand" to="/landing">
-            Owner's Dashboard
-          </Link>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarContent"
-            aria-controls="navbarContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
+  className="navbar navbar-expand-lg navbar-dark"
+  style={{ backgroundColor: "#5a2ca0" }}
+>
+  <div className="container-fluid">
+    {/* Static title instead of clickable logo */}
+    <span className="navbar-brand mb-0 h1">Owner's Dashboard</span>
 
-          <div
-            className="collapse navbar-collapse justify-content-end"
-            id="navbarContent"
-          >
-            <div className="dropdown">
-              <button
-                className="btn btn-outline-light dropdown-toggle"
-                type="button"
-                id="profileMenu"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Profile
-              </button>
-              <ul
-                className="dropdown-menu dropdown-menu-end"
-                aria-labelledby="profileMenu"
-              >
-                <li>
-                  <Link className="dropdown-item" to="/my-profile">
-                    My Profile
-                  </Link>
-                </li>
-                <li>
-                  <Link className="dropdown-item" to="/posted-properties">
-                    Posted Properties
-                  </Link>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </nav>
+    <div className="collapse navbar-collapse justify-content-end" id="navbarContent">
+      {/* Owner profile icon and name */}
+      <div className="d-flex align-items-center me-3">
+        <span className="text-white me-2">John Doe</span> {/* Replace with dynamic owner name */}
+        <i
+          className="bi bi-person-circle text-white"
+          style={{ fontSize: "1.5rem" }}
+        ></i>
+      </div>
 
-      {/* Page content */}
+      {/* Dropdown */}
+      <div className="dropdown">
+        <button
+          className="btn btn-outline-light dropdown-toggle"
+          type="button"
+          id="profileMenu"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          Profile
+        </button>
+        <ul
+          className="dropdown-menu dropdown-menu-end"
+          aria-labelledby="profileMenu"
+        >
+          <li>
+            <Link className="dropdown-item" to="/my-profile">
+              My Profile
+            </Link>
+          </li>
+          <li>
+            <Link className="dropdown-item" to="/posted-properties">
+              Posted Properties
+            </Link>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
       <div className="container flex-grow-1 d-flex justify-content-center align-items-start py-4">
         <div
           className="card shadow-lg p-4 w-100"
@@ -164,6 +206,20 @@ export default function PostAccommodation() {
         >
           <h3 className="text-center mb-4">Post Your Accommodation</h3>
           <form onSubmit={handleSubmit}>
+            {/* Full Name */}
+            <div className="mb-3">
+              <label className="form-label">Full Name *</label>
+              <input
+                type="text"
+                name="fullName"
+                value={formData.fullName}
+                onChange={handleChange}
+                className="form-control"
+                placeholder="Enter your full name"
+                required
+              />
+            </div>
+
             {/* City */}
             <div className="mb-3">
               <label className="form-label">City *</label>
@@ -194,7 +250,7 @@ export default function PostAccommodation() {
               </select>
             </div>
 
-            {/* Building */}
+            {/* Building Name */}
             <div className="mb-3">
               <label className="form-label">Building/Society Name *</label>
               <input
@@ -227,9 +283,7 @@ export default function PostAccommodation() {
                 name="mobile"
                 value={formData.mobile}
                 onChange={handleChange}
-                className={`form-control ${
-                  errors.mobile ? "is-invalid" : ""
-                }`}
+                className={`form-control ${errors.mobile ? "is-invalid" : ""}`}
                 placeholder="Enter 10-digit mobile number"
                 required
               />
@@ -255,7 +309,7 @@ export default function PostAccommodation() {
               )}
             </div>
 
-            {/* Nearest Colleges */}
+            {/* Colleges */}
             <div className="mb-3">
               <label className="form-label">Nearest College(s) & Distance</label>
               {formData.colleges.map((college, index) => (
@@ -365,38 +419,36 @@ export default function PostAccommodation() {
                 multiple
               />
               <div className="mt-2 d-flex flex-wrap">
-                {formData.images.length > 0 &&
-                  formData.images.map((img, idx) => (
-                    <div
-                      key={idx}
-                      className="position-relative me-2 mb-2"
-                      style={{ display: "inline-block" }}
-                    >
-                      <img
-                        src={URL.createObjectURL(img)}
-                        alt="preview"
-                        style={{
-                          width: "80px",
-                          height: "80px",
-                          objectFit: "cover",
-                          borderRadius: "5px",
-                          border: "1px solid #ccc",
-                        }}
-                      />
-                      <button
-                        type="button"
-                        className="btn-close position-absolute top-0 end-0"
-                        aria-label="Remove"
-                        onClick={() => removeImage(idx)}
-                      ></button>
-                    </div>
-                  ))}
+                {formData.images.map((img, idx) => (
+                  <div
+                    key={idx}
+                    className="position-relative me-2 mb-2"
+                    style={{ display: "inline-block" }}
+                  >
+                    <img
+                      src={URL.createObjectURL(img)}
+                      alt="preview"
+                      style={{
+                        width: "80px",
+                        height: "80px",
+                        objectFit: "cover",
+                        borderRadius: "5px",
+                        border: "1px solid #ccc",
+                      }}
+                    />
+                    <button
+                      type="button"
+                      className="btn-close position-absolute top-0 end-0"
+                      aria-label="Remove"
+                      onClick={() => removeImage(idx)}
+                    ></button>
+                  </div>
+                ))}
               </div>
             </div>
 
-            {/* Submit */}
-            <button type="submit" className="btn btn-primary w-100">
-              Post Accommodation
+            <button type="submit" className="btn btn-primary w-100" disabled={loading}>
+              {loading ? "Posting..." : "Post Accommodation"}
             </button>
           </form>
         </div>

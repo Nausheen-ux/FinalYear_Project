@@ -20,8 +20,13 @@ export default function Login() {
     if (res.ok) {
       localStorage.setItem("token", data.token);
       localStorage.setItem("role", data.role);
+     localStorage.setItem("userId", data._id); 
+      //localStorage.setItem("ownerId", data.ownerId);
+      localStorage.setItem("ownerId", data._id); // or data.ownerId if your backend sends it
+localStorage.setItem("ownerName", data.name); // store owner's name
 
-      if (data.role === "owner") navigate("/owner-dashboard");
+
+      if (data.role === "owner") navigate("/post-accommodation");
       else navigate("/browse");
     } else {
       alert(data.message);

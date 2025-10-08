@@ -16,8 +16,10 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Browse from "./pages/Browse";
-import OwnerDashboard from "./pages/OwnerDashboard";
+//import OwnerDashboard from "./pages/OwnerDashboard";
 import RentPage from "./components/RentPage";
+import PostAccommodation from "./components/PostAccommodation";
+import PostedProperties from "./components/PostedProperties";
 
 function PrivateRoute({ children }) {
    const token = localStorage.getItem("token");
@@ -110,7 +112,9 @@ export default function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/browse" element={<PrivateRoute><Browse /></PrivateRoute>} />
-        <Route path="/owner-dashboard" element={<PrivateRoute><OwnerDashboard /></PrivateRoute>} />
+        <Route path="/post-accommodation" element={<PrivateRoute><PostAccommodation /></PrivateRoute>} />
+        <Route path="/posted-properties" element={<PrivateRoute><PostedProperties /></PrivateRoute>} />
+      <Route path="/owner-dashboard" element={<PrivateRoute><PostAccommodation /></PrivateRoute>} />
         <Route path="/rent" element={<PrivateRoute><RentPage /></PrivateRoute>} />
         <Route path="/rent-results" element={<PrivateRoute><RentResult /></PrivateRoute>} />
         <Route path="/ParttimeJob" element={<PrivateRoute><ParttimeJob/> </PrivateRoute>}/>
