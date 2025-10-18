@@ -160,7 +160,7 @@ export default function PostAccommodation() {
     <div className="collapse navbar-collapse justify-content-end" id="navbarContent">
       {/* Owner profile icon and name */}
       <div className="d-flex align-items-center me-3">
-        <span className="text-white me-2">John Doe</span> {/* Replace with dynamic owner name */}
+        <span className="text-white me-2">Shreya Modak</span> {/* Replace with dynamic owner name */}
         <i
           className="bi bi-person-circle text-white"
           style={{ fontSize: "1.5rem" }}
