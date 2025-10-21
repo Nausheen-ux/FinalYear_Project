@@ -19,11 +19,14 @@ const JOB_ROLES = [
   "Delivery Rider / Delivery Partner",
   "Retail Associate / Sales",
   "Data Entry / Backoffice",
+  "Library assistant",
   "Freelance Content Writer",
   "Graphic Designer (Freelance)",
   "Customer Support (Work from Home)",
   "Barista / Cafe Staff",
   "Event Staff / Helper",
+  "Pet sitter/Animal caretaker",
+  "Babysitter/Nanny",
   "Research Assistant (Part-time)",
 ];
 

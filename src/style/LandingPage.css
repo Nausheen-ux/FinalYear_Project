@@ -1,147 +1,185 @@
-/* .landing-container {
-  max-width: 800px;
-  margin: 50px auto;
-  padding: 20px;
-  font-family: Arial, sans-serif;
-  text-align: center;
-}
-
-h1 {
-  color: #2c3e50;
-  margin-bottom: 20px;
-}
-
-form {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
-  justify-content: center;
-  align-items: center;
-}
-
-label {
-  display: flex;
-  flex-direction: column;
-  font-size: 14px;
-  color: #333;
-}
-
-input,
-select,
-button {
-  padding: 8px 12px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 14px;
-}
-
-button {
-  background: #3498db;
-  color: white;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-button:hover {
-  background: #2980b9;
-} */
-
-/* Center the main container */
-.landing-container {
-  max-width: 700px;
-  margin: 0 auto;
+/* 🌇 Main Container */
+.landing-page {
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 40px 20px;
-  font-family: 'Poppins', Arial, sans-serif;
-  text-align: center;
-  background: linear-gradient(to bottom, #f8f3ef, #ffffff);
-}
-
-/* Headings */
-h1 {
-  color: #2c3e50;
-  font-size: 2.2rem;
-  font-weight: 700;
-  margin-bottom: 10px;
-}
-
-p {
-  color: #555;
-  margin-bottom: 25px;
-  font-size: 15px;
-}
-
-/* Form styling */
-form {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
-  justify-content: center;
-  align-items: center;
-  background: #fff;
-  padding: 25px;
-  border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-  border: 1px solid #f0eaea;
-}
-
-/* Labels */
-label {
-  display: flex;
-  flex-direction: column;
-  font-size: 14px;
-  color: #333;
-  gap: 6px;
-  width: 200px;
-}
-
-/* Inputs and Selects */
-input,
-select {
-  padding: 10px 12px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  font-size: 14px;
-  outline: none;
-  transition: all 0.2s ease-in-out;
-}
-
-input:focus,
-select:focus {
-  border-color: #e6424f;
-  box-shadow: 0 0 6px rgba(230, 66, 79, 0.2);
-}
-
-/* Buttons */
-button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 10px;
-  background: #e6424f;
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
   color: #fff;
-  font-size: 15px;
+  font-family: "Poppins", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+}
+
+/* 🏷️ Header Styling */
+.header {
+  display: flex;
+  flex-direction: column; /* ensures title and tagline are stacked */
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.app-title {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 0.8rem;
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+  color: #fff;
+}
+
+.tagline {
+  font-size: 1.3rem;
+  color: #e1e8ff;
+  font-weight: 400;
+  line-height: 1.5;
+  margin: 0;
+  display: block; /* ensures tagline appears below */
+  max-width: 700px;
+}
+
+/* 🎯 Action Buttons Section */
+.action-buttons {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.btn {
+  background-color: #fff;
+  color: #333;
+  padding: 1rem 1.8rem;
+  border: none;
+  border-radius: 50px;
+  font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 10px rgba(230, 66, 79, 0.3);
 }
 
-button:hover {
-  background: #d83945;
-  transform: translateY(-2px);
+.btn:hover {
+  background-color: #1e90ff;   /* bright blue hover */
+  color: white;                /* make text white for contrast */
+  transform: scale(1.08);
+  box-shadow: 0 4px 12px rgba(30, 144, 255, 0.4);
 }
 
-/* Responsive */
-@media (max-width: 600px) {
-  form {
+
+/* 🎨 Individual Button Colors */
+.accommodation-btn {
+  background-color: white;
+}
+
+.job-btn {
+  background-color: white;
+}
+
+.emergency-btn {
+  background-color: white;
+}
+
+/* 🚨 Emergency Section (currently not used on landing) */
+.emergency-section {
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  padding: 1.5rem 2rem;
+  width: 90%;
+  max-width: 600px;
+  text-align: left;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.emergency-section h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.contact-list {
+  list-style: none;
+  padding: 0;
+}
+
+.contact-list li {
+  margin: 0.5rem 0;
+  font-size: 1rem;
+}
+
+/* 🦶 Footer */
+.footer {
+  margin-top: 3rem;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* 🧭 Top-Right Buttons */
+.top-right {
+  position: fixed;
+  top: 20px;
+  right: 25px;
+  z-index: 10;
+}
+
+/* 💡 Reusable Corner Buttons (My Profile + Logout) */
+.corner-btn {
+  background-color: #ffffff;
+  color: #333;
+  border: none;
+  padding: 0.7rem 1.4rem;
+  border-radius: 30px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.corner-btn:hover {
+  background-color: #1e90ff;
+  color: white;
+  transform: scale(1.05);
+}
+
+.corner-btn:active {
+  background-color: #0056b3;
+  transform: scale(0.98);
+}
+
+.logout-btn {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+}
+
+/* 📱 Responsive Design */
+@media (max-width: 768px) {
+  .app-title {
+    font-size: 2.2rem;
+  }
+
+  .tagline {
+    font-size: 1rem;
+    padding: 0 1rem;
+  }
+
+  .action-buttons {
     flex-direction: column;
+    gap: 1rem;
   }
 
-  label {
-    width: 100%;
+  .corner-btn {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .logout-btn {
+    bottom: 20px;
+    right: 20px;
   }
 }
+
+

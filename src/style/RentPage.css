@@ -1,0 +1,119 @@
+/* RentPage.css */
+
+/* General page container */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #e0f7fa, #ffffff);
+  min-height: 100vh;
+  padding: 40px 20px;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Main card */
+.card {
+  background: #ffffff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  padding: 40px;
+  width: 100%;
+  max-width: 600px;
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+/* Header */
+.header h2 {
+  text-align: center;
+  color: #0288d1;
+  margin-bottom: 30px;
+  font-weight: 600;
+}
+
+/* Form styling */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Form rows */
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+label {
+  font-weight: 500;
+  color: #333;
+}
+
+/* Input fields */
+.input {
+  padding: 10px 12px;
+  border: 2px solid #b3e5fc;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.2s ease;
+  font-size: 15px;
+}
+
+.input:focus {
+  border-color: #0288d1;
+  box-shadow: 0 0 4px rgba(2, 136, 209, 0.4);
+}
+
+/* Grid layout for two columns */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+/* Buttons */
+.btn {
+  flex: 1;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+.btn-primary {
+  background-color: #0288d1;
+  color: white;
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #0277bd;
+  transform: scale(1.03);
+}
+
+.btn-ghost {
+  background-color: transparent;
+  color: #0288d1;
+  border: 2px solid #0288d1;
+}
+
+.btn-ghost:hover {
+  background-color: #e1f5fe;
+  transform: scale(1.03);
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+  .card {
+    padding: 25px;
+  }
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

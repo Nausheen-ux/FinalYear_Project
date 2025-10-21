@@ -23,8 +23,7 @@ export default function Register() {
 
       if (res.ok) {
         alert("Registration successful! Please login.");
-        navigate("/login"); // redirect to login page
-      } else {
+        navigate("/login"); 
         alert(data.message);
       }
     } catch (err) {

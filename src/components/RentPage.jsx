@@ -2,6 +2,8 @@
 
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "../style/RentPage.css";
+
 
 /* Rent preference form: rentRange, sharing, location, accommodationType, gender */
 export default function RentPage() {
