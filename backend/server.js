@@ -4,7 +4,7 @@ import cors from "cors";
 import connectDB from "./config/db.js";
 import userRoutes from "./routes/userRoutes.js";
 import accommodationRoutes from "./routes/accommodationRoutes.js"; // ✅ Import accommodation routes
-
+import searchRoutes from "./routes/searchRoutes.js";
 dotenv.config();
 connectDB();
 
@@ -28,6 +28,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // Routes
 app.use("/api/users", userRoutes);
 app.use("/api/accommodation", accommodationRoutes); // ✅ Added accommodation route
+app.use("/api/search", searchRoutes);
 
 // Server start
 const PORT = process.env.PORT || 5000;

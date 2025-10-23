@@ -1,4 +1,4 @@
-/* simple app-wide styles */
+
 * { box-sizing: border-box; }
 body {
   font-family: "Segoe UI", Roboto, Arial, sans-serif;
@@ -27,6 +27,7 @@ body {
 }
 
 /* forms */
+
 .form-row { margin-bottom: 12px; }
 label { display: block; margin-bottom: 6px; font-weight: 600; color: #2b4866; font-size: 14px; }
 .input, select, textarea {
@@ -55,6 +56,7 @@ label { display: block; margin-bottom: 6px; font-weight: 600; color: #2b4866; fo
 @media (max-width: 700px){ .grid { grid-template-columns: 1fr; } .container{ padding:16px; } }
 
 /* small helper */
+
 .note { font-size: 13px; color: #4b5563; margin-top: 6px; }
 .file-preview { margin-top: 8px; font-size: 13px; color: #334e68; }
 .card-list { display:flex; gap:12px; flex-wrap:wrap; margin-top:12px; }

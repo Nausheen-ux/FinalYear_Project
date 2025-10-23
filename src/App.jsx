@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
-import Browse from "./pages/Browse";
+//import Browse from "./pages/Browse";
 import RentPage from "./components/RentPage";
 import RentResult from "./components/RentResult";
 import ParttimeJob from "./components/ParttimeJob";
@@ -39,14 +39,14 @@ export default function App() {
       />
 
       {/* Protected routes */}
-      <Route
+      {/* <Route
         path="/browse"
         element={
           <PrivateRoute>
             <Browse />
           </PrivateRoute>
         }
-      />
+      /> */}
       <Route
         path="/post-accommodation"
         element={
