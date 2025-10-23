@@ -11,6 +11,7 @@ import PostedProperties from "./components/PostedProperties";
 import LandingPage from "./components/LandingPage"; 
 import MyProfile from "./components/MyProfile";
 import EmergencyContacts from "./components/EmergencyContacts";
+import HomePage from "./components/HomePage";
 
 // ✅ Private route for logged-in users
 function PrivateRoute({ children }) {
@@ -22,7 +23,9 @@ export default function App() {
   return (
     <Routes>
       {/* Default route */}
-      <Route path="/" element={<Navigate to="/login" />} />
+      <Route path="/" element={<Navigate to="/HomePage" />} />
+
+    <Route path="/HomePage" element={<HomePage />} />
 
       {/* Auth routes */}
       <Route path="/register" element={<Register />} />
@@ -113,7 +116,7 @@ export default function App() {
 
 
       {/* Fallback */}
-      <Route path="*" element={<Navigate to="/login" />} />
+      <Route path="*" element={<Navigate to="/HomePage" />} />
     </Routes>
   );
 }
