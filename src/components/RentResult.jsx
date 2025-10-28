@@ -15,6 +15,7 @@ export default function RentResult() {
     fetchResults();
   }, []);
 
+  // Fetch search results
   const fetchResults = async () => {
     try {
       setLoading(true);
@@ -24,19 +25,36 @@ export default function RentResult() {
         setLoading(false);
         return;
       }
+
       const preferences = JSON.parse(prefs);
       setSearchPrefs(preferences);
+
+      // ✅ FIX: Get studentId from localStorage
+      const studentId = localStorage.getItem("userId") || 
+                        localStorage.getItem("studentId") || 
+                        localStorage.getItem("id");
 
       const params = new URLSearchParams();
       if (preferences.rentRange) params.append("rentRange", preferences.rentRange);
       if (preferences.sharing) params.append("sharing", preferences.sharing);
       if (preferences.location) params.append("location", preferences.location);
-      if (preferences.accommodationType) params.append("accommodationType", preferences.accommodationType);
-      if (preferences.genderPreference) params.append("genderPreference", preferences.genderPreference);
+      if (preferences.accommodationType)
+        params.append("accommodationType", preferences.accommodationType);
+      if (preferences.genderPreference)
+        params.append("genderPreference", preferences.genderPreference);
+      
+      // ✅ FIX: Pass studentId to get connection status
+      if (studentId) params.append("studentId", studentId);
 
-      const response = await axios.get(`http://localhost:5000/api/search?${params.toString()}`);
-      if (response.data.success) setProperties(response.data.data);
-      else setError("Failed to fetch results");
+      const response = await axios.get(
+        `http://localhost:5000/api/search?${params.toString()}`
+      );
+      
+      if (response.data.success) {
+        setProperties(response.data.data);
+      } else {
+        setError("Failed to fetch results");
+      }
     } catch (err) {
       console.error("Error fetching results:", err);
       setError(err.response?.data?.message || "Failed to fetch accommodation results");
@@ -45,11 +63,13 @@ export default function RentResult() {
     }
   };
 
+  // New search
   const handleNewSearch = () => {
     localStorage.removeItem("rentPreferences");
     nav("/rent");
   };
 
+  // UI states
   if (loading) {
     return (
       <div className="centered min-60vh">
@@ -67,7 +87,7 @@ export default function RentResult() {
         <div className="text-center p-4">
           <div className="alert">{error}</div>
           <button className="btn-primary" onClick={handleNewSearch}>
-            &#8592; Back to Search
+            ← Back to Search
           </button>
         </div>
       </div>
@@ -80,14 +100,17 @@ export default function RentResult() {
       <div className="rent-result-header">
         <div className="header-content">
           <div>
-            <h3 className="header-title">&#128269; Search Results</h3>
+            <h3 className="header-title">🔍 Search Results</h3>
             <p className="header-subtitle">
-              <strong>{properties.length}</strong> accommodation{properties.length !== 1 ? "s" : ""} found
-              {searchPrefs?.location && <span className="highlight"> in {searchPrefs.location}</span>}
+              <strong>{properties.length}</strong> accommodation
+              {properties.length !== 1 ? "s" : ""} found
+              {searchPrefs?.location && (
+                <span className="highlight"> in {searchPrefs.location}</span>
+              )}
             </p>
           </div>
           <button className="btn-outline" onClick={handleNewSearch}>
-            &#9881; New Search
+            ⚙️ New Search
           </button>
         </div>
       </div>
@@ -97,13 +120,24 @@ export default function RentResult() {
         <div className="search-summary-card">
           <h6>Your Search Criteria:</h6>
           <div className="badges">
-            {searchPrefs.rentRange && <span className="badge primary">{searchPrefs.rentRange}</span>}
-            {searchPrefs.sharing && <span className="badge info">{searchPrefs.sharing} Sharing</span>}
-            {searchPrefs.accommodationType && <span className="badge success">{searchPrefs.accommodationType}</span>}
-            {searchPrefs.location && <span className="badge danger">{searchPrefs.location}</span>}
-            {searchPrefs.genderPreference && searchPrefs.genderPreference !== "Any" && (
-              <span className="badge warning">{searchPrefs.genderPreference} Only</span>
+            {searchPrefs.rentRange && (
+              <span className="badge primary">{searchPrefs.rentRange}</span>
             )}
+            {searchPrefs.sharing && (
+              <span className="badge info">{searchPrefs.sharing} Sharing</span>
+            )}
+            {searchPrefs.accommodationType && (
+              <span className="badge success">{searchPrefs.accommodationType}</span>
+            )}
+            {searchPrefs.location && (
+              <span className="badge danger">{searchPrefs.location}</span>
+            )}
+            {searchPrefs.genderPreference &&
+              searchPrefs.genderPreference !== "Any" && (
+                <span className="badge warning">
+                  {searchPrefs.genderPreference} Only
+                </span>
+              )}
           </div>
         </div>
       )}
@@ -112,7 +146,7 @@ export default function RentResult() {
       <div className="results-container">
         {properties.length === 0 ? (
           <div className="text-center py-5">
-            <div className="no-results">&#128717;</div>
+            <div className="no-results">🪧</div>
             <h5>No accommodations found</h5>
             <p>We couldn't find any properties matching your search criteria.</p>
             <button className="btn-primary" onClick={handleNewSearch}>
@@ -122,7 +156,11 @@ export default function RentResult() {
         ) : (
           <div className="property-grid">
             {properties.map((property) => (
-              <PropertyCard key={property._id} property={property} />
+              <PropertyCard
+                key={property._id}
+                property={property}
+                onRefresh={fetchResults} // ✅ Pass refresh function to reload after connection status changes
+              />
             ))}
           </div>
         )}
@@ -131,7 +169,7 @@ export default function RentResult() {
       {/* Back Button */}
       <div className="back-btn-container">
         <button className="btn-outline" onClick={() => nav("/landing")}>
-          &#8592; Back to Home
+          ← Back to Home
         </button>
       </div>
     </div>
