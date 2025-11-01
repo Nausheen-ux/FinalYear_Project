@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
@@ -138,6 +138,14 @@ export default function PostAccommodation() {
       setLoading(false);
     }
   };
+  const [ownerName, setOwnerName] = useState("");
+  useEffect(() => {
+     const name = localStorage.getItem("ownerName") || 
+                  localStorage.getItem("userName") || 
+                  "Owner";
+     setOwnerName(name);
+   }, []);
+
 
   return (
     <div
@@ -150,7 +158,7 @@ export default function PostAccommodation() {
     >
       {/* Navbar */}
       <nav
-  className="navbar navbar-expand-lg navbar-dark"
+  className="navbar navbar-expand-lg navbar-dark bg-violet px-3 py-1 fixed-top"
   style={{ backgroundColor: "#5a2ca0" }}
 >
   <div className="container-fluid">
@@ -160,7 +168,7 @@ export default function PostAccommodation() {
     <div className="collapse navbar-collapse justify-content-end" id="navbarContent">
       {/* Owner profile icon and name */}
       <div className="d-flex align-items-center me-3">
-        <span className="text-white me-2">Shreya Modak</span> {/* Replace with dynamic owner name */}
+        <span className="text-white me-2">{ownerName || "Owner"}</span> {/* Replace with dynamic owner name */}
         <i
           className="bi bi-person-circle text-white"
           style={{ fontSize: "1.5rem" }}
@@ -182,11 +190,11 @@ export default function PostAccommodation() {
           className="dropdown-menu dropdown-menu-end"
           aria-labelledby="profileMenu"
         >
-          <li>
+          {/* <li>
             <Link className="dropdown-item" to="/my-profile">
               My Profile
             </Link>
-          </li>
+          </li> */}
           <li>
             <Link className="dropdown-item" to="/posted-properties">
               Posted Properties
