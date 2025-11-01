@@ -200,13 +200,13 @@ export default function LandingPage() {
           Smart, simple, and student-friendly — explore stays, part-time jobs, and campus life with ease!
         </p>
 
-        <div className="search-bar">
+        {/* <div className="search-bar">
           <input
             type="text"
             placeholder="Search by city, university, or property"
           />
           <button>🔍</button>
-        </div>
+        </div> */}
 
         <div className="cta-buttons">
           <button onClick={() => navigate("/rent")} style={{ fontWeight: "bold" }}>
