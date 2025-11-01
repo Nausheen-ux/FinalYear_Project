@@ -1,4 +1,4 @@
-/* 🌇 Main Container */
+/* 
 .landing-page {
   min-height: 100vh;
   background: linear-gradient(135deg, #6a11cb, #2575fc);
@@ -12,10 +12,10 @@
   padding: 2rem;
 }
 
-/* 🏷️ Header Styling */
+
 .header {
   display: flex;
-  flex-direction: column; /* ensures title and tagline are stacked */
+  flex-direction: column; 
   align-items: center;
   justify-content: center;
   text-align: center;
@@ -37,11 +37,11 @@
   font-weight: 400;
   line-height: 1.5;
   margin: 0;
-  display: block; /* ensures tagline appears below */
+  display: block;
   max-width: 700px;
 }
 
-/* 🎯 Action Buttons Section */
+
 .action-buttons {
   display: flex;
   gap: 1.5rem;
@@ -63,14 +63,14 @@
 }
 
 .btn:hover {
-  background-color: #1e90ff;   /* bright blue hover */
-  color: white;                /* make text white for contrast */
+  background-color: #1e90ff;   
+  color: white;                
   transform: scale(1.08);
   box-shadow: 0 4px 12px rgba(30, 144, 255, 0.4);
 }
 
 
-/* 🎨 Individual Button Colors */
+
 .accommodation-btn {
   background-color: white;
 }
@@ -83,7 +83,7 @@
   background-color: white;
 }
 
-/* 🚨 Emergency Section (currently not used on landing) */
+
 .emergency-section {
   background-color: rgba(255, 255, 255, 0.15);
   border-radius: 20px;
@@ -110,14 +110,14 @@
   font-size: 1rem;
 }
 
-/* 🦶 Footer */
+
 .footer {
   margin-top: 3rem;
   font-size: 0.9rem;
   opacity: 0.8;
 }
 
-/* 🧭 Top-Right Buttons */
+
 .top-right {
   position: fixed;
   top: 20px;
@@ -125,7 +125,6 @@
   z-index: 10;
 }
 
-/* 💡 Reusable Corner Buttons (My Profile + Logout) */
 .corner-btn {
   background-color: #ffffff;
   color: #333;
@@ -155,7 +154,7 @@
   right: 25px;
 }
 
-/* 📱 Responsive Design */
+
 @media (max-width: 768px) {
   .app-title {
     font-size: 2.2rem;
@@ -182,4 +181,330 @@
   }
 }
 
+ */
 
+ /*-----------------------------------final----------------------------------------------------------*/
+
+ /* .landing-container {
+  font-family: "Poppins", sans-serif;
+  color: #333;
+}
+
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 4rem;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  z-index: 10;
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.nav-links .nav-btn {
+  background: transparent;
+  border: 1px solid #fff;
+  color: #fff;
+  padding: 8px 18px;
+  margin-left: 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.nav-links .nav-btn:hover {
+  background: #fff;
+  color: #333;
+}
+
+
+.hero-section {
+  height: 100vh;
+  background: url("https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=1600&q=80")
+    no-repeat center center/cover;
+  position: relative;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #fff;
+}
+
+.hero-title {
+  font-size: 3rem;
+  font-weight: 600;
+}
+
+.hero-subtitle {
+  margin-top: 10px;
+  font-size: 1.2rem;
+  max-width: 600px;
+  line-height: 1.5;
+}
+
+
+.search-bar {
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 30px;
+  padding: 8px 15px;
+  width: 400px;
+}
+
+.search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 10px;
+  font-size: 1rem;
+}
+
+.search-btn {
+  background: #ff5c5c;
+  border: none;
+  color: #fff;
+  font-size: 1.2rem;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+}
+
+
+.features {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  gap: 2rem;
+}
+
+.feature {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1rem;
+}
+
+
+.info-section {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  padding: 3rem 0;
+  background: #f8f8f8;
+}
+
+.info-card {
+  text-align: center;
+}
+
+.info-card h2 {
+  font-size: 2rem;
+  color: #ff5c5c;
+}
+
+.footer {
+  background: #111;
+  color: #fff;
+  text-align: center;
+  padding: 1rem 0;
+  font-size: 0.9rem;
+} */
+
+/*------------------------------------pink------------------------------------------------------*/
+
+
+.landing-container {
+  min-height: 100vh;
+  background: linear-gradient(120deg, #ffb6c1 0%, #ffd166 40%, #ff6f91 70%, #6ec5e9 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #3d3d3d;
+  overflow-x: hidden;
+  font-family: 'Poppins', sans-serif;
+  position: relative;
+}
+
+/* Navbar */
+/* .navbar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 4rem;
+  position: absolute;
+  top: 0;
+  z-index: 10;
+} */
+
+
+.navbar {
+  position: fixed;              /* makes it stick to top */
+  top: 0;                       /* align right at top */
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 60px;
+  /* background: linear-gradient(135deg, #b057f4, #f48fb1); */
+  /* box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); */
+  /* color: white; */
+  font-weight: 600;
+  z-index: 1000;
+}
+
+.logo {
+  font-family: "Poppins", sans-serif;
+  font-weight: 900;
+  font-style: italic;
+  font-size: 2.8rem;
+  color: white;
+  text-shadow: 
+    -2px -2px 0 #ff3c83,
+    2px -2px 0 #ff3c83,
+    -2px 2px 0 #ff3c83,
+    2px 2px 0 #ff3c83,
+    4px 4px 0 rgba(0, 0, 0, 0.05);
+  letter-spacing: 1px;
+  padding: 0.3rem 0.8rem;
+  border-radius: 12px;
+}
+
+.nav-links button {
+  background: none;
+  border: none;
+  color: #3d3d3d;
+  margin-left: 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.nav-links button:hover {
+  color: #ff3c83;
+  transform: scale(1.1);
+}
+
+/* Hero Section */
+.hero {
+  text-align: center;
+  /* margin-top: 20vh; */
+   margin-top: 90px;
+  max-width: 700px;
+  animation: fadeIn 1.5s ease;
+  padding: 50px 20px;
+}
+
+.hero-title {
+  font-size: 3.2rem;
+  font-weight: 800;
+  color: #ff3c83;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px #ffe9e9;
+}
+
+.hero-subtitle {
+  font-size: 1.2rem;
+  color: #444;
+  margin-bottom: 2.5rem;
+  font-weight: 500;
+}
+
+/* Search Bar */
+.search-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: white;
+  border-radius: 50px;
+  padding: 0.4rem 0.8rem;
+  width: 80%;
+  max-width: 550px;
+  margin: 0 auto 2rem;
+  box-shadow: 0px 6px 20px rgba(255, 192, 203, 0.4);
+}
+
+.search-bar input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 0.8rem 1rem;
+  border-radius: 50px;
+  font-size: 1rem;
+  color: #444;
+}
+
+.search-bar button {
+  background: linear-gradient(135deg, #ff3c83, #ff7f50);
+  border: none;
+  color: white;
+  font-size: 1.3rem;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.search-bar button:hover {
+  transform: scale(1.1);
+}
+
+/* CTA Buttons */
+.cta-buttons {
+  display: flex;
+  gap: 1.2rem;
+  justify-content: center;
+}
+
+.cta-buttons button {
+  background: linear-gradient(135deg, #ff7f50, #ff3c83);
+  border: none;
+  color: white;
+  padding: 0.8rem 1.8rem;
+  border-radius: 30px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0px 4px 15px rgba(255, 105, 180, 0.4);
+}
+
+.cta-buttons button:hover {
+  transform: translateY(-3px);
+  background: linear-gradient(135deg, #ff3c83, #ff7f50);
+}
+
+/* Footer */
+.footer {
+  position: absolute;
+  bottom: 1.5rem;
+  color: #333;
+  font-size: 0.9rem;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
