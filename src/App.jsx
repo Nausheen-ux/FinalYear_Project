@@ -141,6 +141,9 @@ import LandingPage from "./components/LandingPage";
 import MyProfile from "./components/MyProfile";
 import EmergencyContacts from "./components/EmergencyContacts";
 import HomePage from "./components/HomePage";
+import ForumHome from "./pages/ForumHome";
+import CreatePost from "./pages/CreatePost";
+import PostDetails from "./pages/PostDetails";
 
 // ✅ Private route for logged-in users
 function PrivateRoute({ children }) {
@@ -157,6 +160,11 @@ export default function App() {
       {/* Auth routes */}
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
+
+      {/* ✅ FORUM ROUTES - MUST BE BEFORE THE FALLBACK */}
+      <Route path="/forum" element={<ForumHome />} />
+      <Route path="/forum/create" element={<CreatePost />} />
+      <Route path="/forum/posts/:id" element={<PostDetails />} />
 
       {/* ✅ Protected routes (only after login) */}
       <Route
@@ -232,9 +240,8 @@ export default function App() {
         }
       />
 
-      {/* Fallback */}
+      {/* ✅ Fallback - MUST BE LAST */}
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   );
 }
-

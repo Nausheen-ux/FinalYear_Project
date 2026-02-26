@@ -2,10 +2,16 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import connectDB from "./config/db.js";
+import path from "path";
+import { fileURLToPath } from "url";
+
+// Import routes
 import userRoutes from "./routes/userRoutes.js";
-import accommodationRoutes from "./routes/accommodationRoutes.js"; // ✅ Import accommodation routes
+import accommodationRoutes from "./routes/accommodationRoutes.js";
 import searchRoutes from "./routes/searchRoutes.js";
 import connectionRequestRoutes from "./routes/connectionRequestRoutes.js";
+import forumRoutes from "./routes/forumRoutes.js";
+
 dotenv.config();
 connectDB();
 
@@ -15,24 +21,20 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// new added
-import path from "path";
-import { fileURLToPath } from "url";
-
+// Setup __dirname for ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Serve uploads folder statically
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-
 // Routes
 app.use("/api/users", userRoutes);
-app.use("/api/accommodation", accommodationRoutes); // ✅ Added accommodation route b  b
+app.use("/api/accommodation", accommodationRoutes);
 app.use("/api/search", searchRoutes);
 app.use("/api/connection-requests", connectionRequestRoutes);
 app.use("/api/connections", connectionRequestRoutes);
-
+app.use("/api/forum", forumRoutes); // ✅ Forum routes added here
 
 // Server start
 const PORT = process.env.PORT || 5000;

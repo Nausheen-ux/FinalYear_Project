@@ -143,10 +143,112 @@
 
 //-----------------------------------pink palette----------------------------------------------------------
 
+
+// import React from "react";
+// import { useNavigate } from "react-router-dom";
+// import "../style/LandingPage.css";
+// import { FaUserCircle, FaUserPlus, FaSignInAlt, FaSignOutAlt, FaInfoCircle } from "react-icons/fa";
+
+// export default function LandingPage() {
+//   const navigate = useNavigate();
+//   const token = localStorage.getItem("token");
+
+//   // handle logout
+//   const handleLogout = () => {
+//     localStorage.removeItem("token");
+//     navigate("/login");
+//   };
+
+//   return (
+//     <div className="landing-container">
+//       {/* Navbar */}
+//       <nav className="navbar">
+//         <div className="logo">CampusOrbit</div>
+//         <div className="nav-links">
+//           {/* Always show About */}
+//           <button className="nav-btn" onClick={() => navigate("/About")}>
+//             <FaInfoCircle className="icon" /> About
+//           </button>
+
+//           {/* If user logged in */}
+//           {token ? (
+//             <>
+//               <button className="nav-btn" onClick={() => navigate("/MyProfile")}>
+//                 <FaUserCircle className="icon" /> Profile
+//               </button>
+//               <button className="nav-btn" onClick={handleLogout}>
+//                 <FaSignOutAlt className="icon" /> Logout
+//               </button>
+//             </>
+//           ) : (
+//             /* If user NOT logged in */
+//             <>
+//               <button className="nav-btn" onClick={() => navigate("/register")}>
+//                 <FaUserPlus className="icon" /> Register
+//               </button>
+//               <button className="nav-btn" onClick={() => navigate("/login")}>
+//                 <FaSignInAlt className="icon" /> Login
+//               </button>
+//             </>
+//           )}
+//         </div>
+//       </nav>
+
+//       {/* Hero Section */}
+//       <section className="hero">
+//         <h1 className="hero-title">Find Your Perfect Stay 🎓</h1>
+//         <p className="hero-subtitle">
+//           Smart, simple, and student-friendly — explore stays, part-time jobs, and campus life with ease!
+//         </p>
+
+//         {/* <div className="search-bar">
+//           <input
+//             type="text"
+//             placeholder="Search by city, university, or property"
+//           />
+//           <button>🔍</button>
+//         </div> */}
+
+//         <div className="cta-buttons">
+//           <button onClick={() => navigate("/rent")} style={{ fontWeight: "bold" }}>
+//             🏠 Find Accommodation
+//           </button>
+//           <button onClick={() => navigate("/ParttimeJob")} style={{ fontWeight: "bold" }}>
+//             💼 Find Jobs
+//           </button>
+//           <button
+//             className="btn emergency-btn"
+//             onClick={() => navigate("/EmergencyContacts")}
+//           >
+//             🚨 Emergency Contacts
+//           </button>
+//         </div>
+//       </section>
+
+//       <footer className="footer">
+//         © 2025 CampusOrbit • Designed for Students, by Students 💫
+//       </footer>
+//     </div>
+//   );
+// }
+
+
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "../style/LandingPage.css";
-import { FaUserCircle, FaUserPlus, FaSignInAlt, FaSignOutAlt, FaInfoCircle } from "react-icons/fa";
+import {
+  FaUserCircle,
+  FaUserPlus,
+  FaSignInAlt,
+  FaSignOutAlt,
+  FaInfoCircle,
+  FaTools,
+  FaHotel,
+  FaUsers,
+  FaComments,
+  FaBriefcase,
+  FaCalendarAlt
+} from "react-icons/fa";
 
 export default function LandingPage() {
   const navigate = useNavigate();
@@ -158,12 +260,95 @@ export default function LandingPage() {
     navigate("/login");
   };
 
+  // Navigate to forum with category filter
+  const navigateToForum = (category) => {
+    navigate(`/forum?category=${encodeURIComponent(category)}`);
+  };
+
   return (
     <div className="landing-container">
+
+      {/* ---- Discussion Forum Panel (LEFT SIDE) ---- */}
+      <div className="forum-container">
+        <h2 
+          className="forum-title" 
+          onClick={() => navigate("/forum")}
+          style={{ cursor: "pointer" }}
+        >
+          📢 Discussion Forum
+        </h2>
+
+        <div className="forum-list">
+          <div 
+            className="forum-item" 
+            onClick={() => navigateToForum("Part-Time Jobs")}
+            style={{ cursor: "pointer" }}
+          >
+            <FaBriefcase className="forum-icon" /> Part-Time Jobs
+          </div>
+
+          <div 
+            className="forum-item" 
+            onClick={() => navigateToForum("Cafes & Restaurants")}
+            style={{ cursor: "pointer" }}
+          >
+            <FaHotel className="forum-icon" /> Café & Restaurant Suggestions
+          </div>
+
+          <div 
+            className="forum-item" 
+            onClick={() => navigateToForum("Events & Meetups")}
+            style={{ cursor: "pointer" }}
+          >
+            <FaCalendarAlt className="forum-icon" /> Events Nearby
+          </div>
+
+          <div 
+            className="forum-item" 
+            onClick={() => navigateToForum("City Services")}
+            style={{ cursor: "pointer" }}
+          >
+            <FaTools className="forum-icon" /> City Services
+          </div>
+
+          <div 
+            className="forum-item" 
+            onClick={() => navigateToForum("Accommodation Tips")}
+            style={{ cursor: "pointer" }}
+          >
+            <FaUsers className="forum-icon" /> Roommate Finder
+          </div>
+
+          <div 
+            className="forum-item" 
+            onClick={() => navigateToForum("General Discussion")}
+            style={{ cursor: "pointer" }}
+          >
+            <FaComments className="forum-icon" /> General Chat
+          </div>
+
+          {/* View All Posts */}
+          <div 
+            className="forum-item forum-view-all" 
+            onClick={() => navigate("/forum")}
+            style={{ 
+              cursor: "pointer",
+              backgroundColor: "#5a2ca0",
+              color: "white",
+              fontWeight: "bold",
+              marginTop: "10px"
+            }}
+          >
+            📋 View All Posts
+          </div>
+        </div>
+      </div>
+
       {/* Navbar */}
       <nav className="navbar">
         <div className="logo">CampusOrbit</div>
         <div className="nav-links">
+
           {/* Always show About */}
           <button className="nav-btn" onClick={() => navigate("/About")}>
             <FaInfoCircle className="icon" /> About
@@ -180,7 +365,7 @@ export default function LandingPage() {
               </button>
             </>
           ) : (
-            /* If user NOT logged in */
+            /* If NOT logged in */
             <>
               <button className="nav-btn" onClick={() => navigate("/register")}>
                 <FaUserPlus className="icon" /> Register
@@ -200,21 +385,18 @@ export default function LandingPage() {
           Smart, simple, and student-friendly — explore stays, part-time jobs, and campus life with ease!
         </p>
 
-        {/* <div className="search-bar">
-          <input
-            type="text"
-            placeholder="Search by city, university, or property"
-          />
-          <button>🔍</button>
-        </div> */}
-
         <div className="cta-buttons">
           <button onClick={() => navigate("/rent")} style={{ fontWeight: "bold" }}>
             🏠 Find Accommodation
           </button>
-          <button onClick={() => navigate("/ParttimeJob")} style={{ fontWeight: "bold" }}>
-            💼 Find Jobs
+
+          <button
+            onClick={() => navigate("/ParttimeJob")}
+            style={{ fontWeight: "bold" }}
+          >
+            💼 Find Jobs                        
           </button>
+
           <button
             className="btn emergency-btn"
             onClick={() => navigate("/EmergencyContacts")}
@@ -230,5 +412,3 @@ export default function LandingPage() {
     </div>
   );
 }
-
-

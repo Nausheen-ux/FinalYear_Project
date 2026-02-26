@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import '../style/Register.css';
 
 export default function Register() {
@@ -8,6 +8,10 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("student");
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // ✅ Get the page user was trying to access before registration
+  const from = location.state?.from || null;
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -22,9 +26,26 @@ export default function Register() {
       const data = await res.json();
 
       if (res.ok) {
-        alert("Registration successful! Please login.");
-        navigate("/login"); 
-        alert(data.message);
+        // ✅ Auto-login after registration
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("role", data.role);
+        localStorage.setItem("userId", data._id);
+        localStorage.setItem("ownerId", data._id);
+        localStorage.setItem("ownerName", data.name);
+        localStorage.setItem("userName", data.name);
+
+        alert("Registration successful!");
+
+        // ✅ Redirect based on where they came from or role
+        if (from) {
+          navigate(from);
+        } else if (data.role === "owner") {
+          navigate("/post-accommodation");
+        } else {
+          navigate("/landing");
+        }
+      } else {
+        alert(data.message || "Registration failed");
       }
     } catch (err) {
       console.error("Registration error:", err);
@@ -35,6 +56,11 @@ export default function Register() {
   return (
     <div className="form">
       <h2>Register</h2>
+      {from && (
+        <p className="alert alert-info" style={{ fontSize: "0.9rem", padding: "10px" }}>
+          Please register to continue
+        </p>
+      )}
       <form onSubmit={handleRegister}>
         <input
           type="text"
@@ -63,6 +89,15 @@ export default function Register() {
         </select>
         <button type="submit">Register</button>
       </form>
+      <p className="mt-3">
+        Already have an account?{" "}
+        <span
+          style={{ color: "#5a2ca0", cursor: "pointer", textDecoration: "underline" }}
+          onClick={() => navigate("/login", { state: { from } })}
+        >
+          Login here
+        </span>
+      </p>
     </div>
   );
 }
