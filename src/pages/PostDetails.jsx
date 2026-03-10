@@ -76,14 +76,26 @@ export default function PostDetails() {
   };
 
   const formatDate = (date) => {
-    return new Date(date).toLocaleString();
+    const now = new Date();
+    const postDate = new Date(date);
+    const diffMs = now - postDate;
+    const diffMins = Math.floor(diffMs / 60000);
+    const diffHours = Math.floor(diffMs / 3600000);
+    const diffDays = Math.floor(diffMs / 86400000);
+
+    if (diffMins < 1) return "Just now";
+    if (diffMins < 60) return `${diffMins}m ago`;
+    if (diffHours < 24) return `${diffHours}h ago`;
+    if (diffDays < 7) return `${diffDays}d ago`;
+    return postDate.toLocaleDateString();
   };
 
   if (loading) {
     return (
-      <div className="text-center py-5">
-        <div className="spinner-border text-primary" role="status">
-          <span className="visually-hidden">Loading...</span>
+      <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#f5f5f5" }}>
+        <div className="text-center">
+          <div className="spinner-border text-primary" style={{ width: "3rem", height: "3rem" }}></div>
+          <p className="mt-3" style={{ color: "#666" }}>Loading post...</p>
         </div>
       </div>
     );
@@ -91,87 +103,154 @@ export default function PostDetails() {
 
   if (!post) {
     return (
-      <div className="container py-5 text-center">
-        <h3>Post not found</h3>
-        <button className="btn btn-primary mt-3" onClick={() => navigate("/forum")}>
-          Back to Forum
-        </button>
+      <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#f5f5f5" }}>
+        <div className="text-center">
+          <div style={{ fontSize: "4rem", marginBottom: "20px" }}>📭</div>
+          <h3>Post not found</h3>
+          <button 
+            className="btn btn-primary mt-3"
+            onClick={() => navigate("/forum")}
+            style={{ padding: "12px 30px", borderRadius: "10px" }}
+          >
+            Back to Forum
+          </button>
+        </div>
       </div>
     );
   }
 
   const isAuthor = post.authorId === userId;
 
-  return (
-    <div style={{ minHeight: "100vh", backgroundColor: "#f5f5f5" }}>
-      {/* Header */}
-      <div style={{ backgroundColor: "#5a2ca0", padding: "20px", color: "white" }}>
-        <div className="container">
-          <button
-            className="btn btn-outline-light btn-sm mb-2"
-            onClick={() => navigate("/forum")}
-          >
-            ← Back to Forum
-          </button>
-          <h2 className="mb-0">{isEditing ? "Edit Post" : post.title}</h2>
-        </div>
-      </div>
+  const categoryColors = {
+    "Part-Time Jobs": "#0d6efd",
+    "City Services": "#198754",
+    "Cafes & Restaurants": "#fd7e14",
+    "Events & Meetups": "#0dcaf0",
+    "Accommodation Tips": "#dc3545",
+    "Transportation": "#6f42c1",
+    "Study Groups": "#d63384",
+    "General Discussion": "#20c997"
+  };
 
-      <div className="container py-4">
+  return (
+    <div style={{ minHeight: "100vh", background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)", paddingTop: "20px", paddingBottom: "50px" }}>
+      <div className="container">
         <div className="row justify-content-center">
-          <div className="col-md-10 col-lg-8">
-            <div className="card shadow-sm">
-              <div className="card-body p-4">
-                {isEditing ? (
-                  /* EDIT MODE */
-                  <div>
-                    <div className="mb-3">
-                      <label className="form-label fw-bold">Title</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        value={editData.title}
-                        onChange={(e) => setEditData({ ...editData, title: e.target.value })}
-                      />
-                    </div>
-                    <div className="mb-3">
-                      <label className="form-label fw-bold">Content</label>
-                      <textarea
-                        className="form-control"
-                        rows="10"
-                        value={editData.content}
-                        onChange={(e) => setEditData({ ...editData, content: e.target.value })}
-                      ></textarea>
-                    </div>
-                    <div className="d-flex gap-2">
-                      <button className="btn btn-success" onClick={handleUpdate}>
-                        Save Changes
-                      </button>
-                      <button className="btn btn-secondary" onClick={() => setIsEditing(false)}>
-                        Cancel
-                      </button>
-                    </div>
+          <div className="col-lg-9 col-xl-8">
+            {/* Back Button - Positioned above card */}
+            <button
+              onClick={() => navigate("/forum")}
+              style={{
+                background: "rgba(255, 255, 255, 0.2)",
+                border: "none",
+                color: "white",
+                padding: "10px 24px",
+                borderRadius: "25px",
+                fontSize: "14px",
+                fontWeight: "500",
+                cursor: "pointer",
+                backdropFilter: "blur(10px)",
+                marginBottom: "20px"
+              }}
+            >
+              ← Back to Forum
+            </button>
+
+            {/* Main Post Card */}
+            <div style={{ background: "white", borderRadius: "20px", boxShadow: "0 20px 60px rgba(0,0,0,0.3)", overflow: "hidden", marginBottom: "20px" }}>
+              
+              {isEditing ? (
+                /* ============ EDIT MODE ============ */
+                <div style={{ padding: "40px 30px" }}>
+                  <h4 style={{ marginBottom: "30px", color: "#2d3748" }}>Edit Post</h4>
+                  
+                  <div style={{ marginBottom: "20px" }}>
+                    <label style={{ display: "block", marginBottom: "8px", fontWeight: "600", color: "#4a5568" }}>Title</label>
+                    <input
+                      type="text"
+                      className="form-control form-control-lg"
+                      value={editData.title}
+                      onChange={(e) => setEditData({ ...editData, title: e.target.value })}
+                      style={{ borderRadius: "10px", border: "2px solid #e2e8f0" }}
+                    />
                   </div>
-                ) : (
-                  /* VIEW MODE */
-                  <div>
-                    {/* Post Header */}
+
+                  <div style={{ marginBottom: "20px" }}>
+                    <label style={{ display: "block", marginBottom: "8px", fontWeight: "600", color: "#4a5568" }}>Content</label>
+                    <textarea
+                      className="form-control"
+                      rows="10"
+                      value={editData.content}
+                      onChange={(e) => setEditData({ ...editData, content: e.target.value })}
+                      style={{ borderRadius: "10px", border: "2px solid #e2e8f0", fontSize: "15px" }}
+                    />
+                  </div>
+
+                  <div className="d-flex gap-2">
+                    <button 
+                      className="btn btn-success"
+                      onClick={handleUpdate}
+                      style={{ padding: "12px 30px", borderRadius: "10px", fontWeight: "600" }}
+                    >
+                      💾 Save Changes
+                    </button>
+                    <button 
+                      className="btn btn-outline-secondary"
+                      onClick={() => setIsEditing(false)}
+                      style={{ padding: "12px 30px", borderRadius: "10px", fontWeight: "600" }}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                /* ============ VIEW MODE ============ */
+                <>
+                  {/* Header */}
+                  <div style={{ padding: "30px", borderBottom: "1px solid #e2e8f0" }}>
                     <div className="d-flex justify-content-between align-items-start mb-3">
                       <div>
-                        <span className="badge bg-primary me-2">{post.category}</span>
-                        <span className="badge bg-secondary">{post.city}</span>
+                        <span 
+                          style={{ 
+                            display: "inline-block",
+                            padding: "6px 16px", 
+                            borderRadius: "20px", 
+                            fontSize: "13px",
+                            fontWeight: "600",
+                            background: categoryColors[post.category] || "#6c757d",
+                            color: "white",
+                            marginRight: "10px"
+                          }}
+                        >
+                          {post.category}
+                        </span>
+                        <span 
+                          style={{ 
+                            display: "inline-block",
+                            padding: "6px 16px", 
+                            borderRadius: "20px", 
+                            fontSize: "13px",
+                            fontWeight: "600",
+                            background: "#e2e8f0",
+                            color: "#4a5568"
+                          }}
+                        >
+                          📍 {post.city}
+                        </span>
                       </div>
                       {isAuthor && (
                         <div className="btn-group">
                           <button
                             className="btn btn-sm btn-outline-primary"
                             onClick={() => setIsEditing(true)}
+                            style={{ borderRadius: "8px 0 0 8px", padding: "8px 16px" }}
                           >
                             ✏️ Edit
                           </button>
                           <button
                             className="btn btn-sm btn-outline-danger"
                             onClick={handleDelete}
+                            style={{ borderRadius: "0 8px 8px 0", padding: "8px 16px" }}
                           >
                             🗑️ Delete
                           </button>
@@ -179,49 +258,91 @@ export default function PostDetails() {
                       )}
                     </div>
 
-                    {/* Post Content */}
-                    <div className="mb-4" style={{ whiteSpace: "pre-wrap" }}>
-                      {post.content}
-                    </div>
+                    <h2 style={{ marginBottom: "20px", color: "#2d3748", fontWeight: "700" }}>
+                      {post.title}
+                    </h2>
 
-                    {/* Post Footer */}
-                    <div className="border-top pt-3 text-muted">
-                      <div className="d-flex justify-content-between">
-                        <div>
-                          <i className="bi bi-person-circle me-2"></i>
-                          <strong>{post.authorName}</strong>
+                    <div className="d-flex align-items-center gap-3" style={{ color: "#718096", fontSize: "14px" }}>
+                      <div className="d-flex align-items-center gap-2">
+                        <div style={{ 
+                          width: "40px", 
+                          height: "40px", 
+                          borderRadius: "50%", 
+                          background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          color: "white",
+                          fontWeight: "bold",
+                          fontSize: "16px"
+                        }}>
+                          {post.authorName?.charAt(0).toUpperCase()}
                         </div>
                         <div>
-                          <i className="bi bi-clock me-1"></i>
-                          {formatDate(post.createdAt)}
+                          <div style={{ fontWeight: "600", color: "#2d3748" }}>{post.authorName}</div>
+                          <div style={{ fontSize: "12px" }}>{formatDate(post.createdAt)}</div>
                         </div>
                       </div>
-                    </div>
-
-                    {/* Person 3 will add Like Button here */}
-                    <div className="border-top mt-3 pt-3">
-                      <p className="text-muted mb-0">
-                        <i className="bi bi-heart me-1"></i>
-                        {post.likeCount || 0} likes
-                      </p>
+                      <div style={{ marginLeft: "auto", display: "flex", gap: "15px" }}>
+                        <span>❤️ {post.likeCount || 0}</span>
+                        <span>💬 {post.commentCount || 0}</span>
+                      </div>
                     </div>
                   </div>
-                )}
-              </div>
+
+                  {/* Content */}
+                  <div style={{ padding: "40px 30px" }}>
+                    <div style={{ 
+                      fontSize: "16px", 
+                      lineHeight: "1.8", 
+                      color: "#2d3748",
+                      whiteSpace: "pre-wrap",
+                      wordBreak: "break-word"
+                    }}>
+                      {post.content}
+                    </div>
+                  </div>
+
+                  {/* Like Section */}
+                  <div style={{ padding: "20px 30px", borderTop: "1px solid #e2e8f0", background: "#f7fafc" }}>
+                    <button
+                      style={{
+                        background: "transparent",
+                        border: "2px solid #e2e8f0",
+                        padding: "12px 24px",
+                        borderRadius: "25px",
+                        fontSize: "14px",
+                        fontWeight: "600",
+                        cursor: "pointer",
+                        color: "#4a5568"
+                      }}
+                    >
+                      ❤️ Like ({post.likeCount || 0})
+                    </button>
+                    <span style={{ marginLeft: "15px", color: "#718096", fontSize: "14px" }}>
+                      Person 3 will add like functionality here
+                    </span>
+                  </div>
+                </>
+              )}
             </div>
 
-            {/* Person 2 will add Comment Section here */}
-            <div className="mt-4">
-              <div className="card shadow-sm">
-                <div className="card-body">
-                  <h5 className="mb-3">
-                    💬 Comments ({post.commentCount || 0})
-                  </h5>
-                  <p className="text-muted">Comment section coming soon...</p>
-                  <p className="text-muted">
-                    <small>Person 2 will implement the full comment system here</small>
-                  </p>
-                </div>
+            {/* Comments Section */}
+            <div style={{ background: "white", borderRadius: "20px", boxShadow: "0 10px 30px rgba(0,0,0,0.2)", padding: "30px" }}>
+              <h5 style={{ marginBottom: "20px", color: "#2d3748", fontWeight: "700" }}>
+                💬 Comments ({post.commentCount || 0})
+              </h5>
+              
+              <div style={{ 
+                padding: "40px", 
+                textAlign: "center", 
+                background: "#f7fafc", 
+                borderRadius: "15px",
+                border: "2px dashed #cbd5e0"
+              }}>
+                <div style={{ fontSize: "3rem", marginBottom: "15px" }}>💭</div>
+                <p style={{ color: "#718096", marginBottom: "5px" }}>Comment section coming soon...</p>
+                <small style={{ color: "#a0aec0" }}>Person 2 will implement the full comment system here</small>
               </div>
             </div>
           </div>
