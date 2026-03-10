@@ -240,7 +240,7 @@ export default function App() {
         }
       />
 
-      {/* ✅ Fallback - MUST BE LAST */}
+      {/* ✅ Fallback - MUST BE LAS*/}
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   );
