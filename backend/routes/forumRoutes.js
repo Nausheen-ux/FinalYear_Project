@@ -9,6 +9,12 @@ import {
   toggleLike  // ✅ Add this
 } from "../controllers/postController.js";
 
+import {
+  getComments,
+  addComment,
+  deleteComment
+} from "../controllers/commentController.js";
+
 const router = express.Router();
 
 // ==================== POST ROUTES ====================
@@ -29,6 +35,10 @@ router.delete("/posts/:id", deletePost);
 
 // Get posts by specific user
 router.get("/users/:userId/posts", getUserPosts);
+
+router.get("/posts/:postId/comments", getComments);
+router.post("/posts/:postId/comments", addComment);
+router.delete("/comments/:id", deleteComment);
 
 // ==================== PLACEHOLDER FOR PERSON 2 & 3 ====================
 // Person 2 will add comment routes here

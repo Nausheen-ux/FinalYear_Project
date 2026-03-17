@@ -13,17 +13,30 @@ export default function PostDetails() {
   const [likeCount, setLikeCount] = useState(0);
   const [liking, setLiking] = useState(false);
 
+  // Comment states
+  const [comments, setComments] = useState([]);
+  const [commentText, setCommentText] = useState("");
+  const [commenting, setCommenting] = useState(false);
+  const [loadingComments, setLoadingComments] = useState(false);
+  const [deletingCommentId, setDeletingCommentId] = useState(null);
+
+  // Read on every render so values are always fresh after login/logout
   const userId = localStorage.getItem("userId");
+  const userName =
+    localStorage.getItem("ownerName") ||
+    localStorage.getItem("userName") ||
+    "Anonymous";
 
   useEffect(() => {
     fetchPost();
+    fetchComments();
   }, [id]);
 
   const fetchPost = async () => {
     try {
       setLoading(true);
       const response = await axios.get(`http://localhost:5000/api/forum/posts/${id}`);
-      
+
       if (response.data.success) {
         setPost(response.data.data);
         setEditData({
@@ -32,8 +45,6 @@ export default function PostDetails() {
           category: response.data.data.category,
           city: response.data.data.city
         });
-        
-        // ✅ Set like status
         setLikeCount(response.data.data.likeCount || 0);
         setIsLiked(response.data.data.likes?.includes(userId) || false);
       }
@@ -42,6 +53,73 @@ export default function PostDetails() {
       alert("Failed to load post");
     } finally {
       setLoading(false);
+    }
+  };
+
+  // ===================== FETCH COMMENTS =====================
+  const fetchComments = async () => {
+    try {
+      setLoadingComments(true);
+      const response = await axios.get(`http://localhost:5000/api/forum/posts/${id}/comments`);
+      if (response.data.success) {
+        setComments(response.data.data);
+      }
+    } catch (error) {
+      console.error("Error fetching comments:", error);
+    } finally {
+      setLoadingComments(false);
+    }
+  };
+
+  // ===================== ADD COMMENT =====================
+  const handleAddComment = async () => {
+    if (!userId) {
+      navigate("/login", { state: { from: `/forum/${id}` } });
+      return;
+    }
+    if (!commentText.trim()) return;
+
+    try {
+      setCommenting(true);
+      const response = await axios.post(
+        `http://localhost:5000/api/forum/posts/${id}/comments`,
+        { userId, userName, content: commentText.trim() }
+      );
+
+      if (response.data.success) {
+        setComments((prev) => [response.data.data, ...prev]);
+        setCommentText("");
+        // Bump the visible comment count on the post header
+        setPost((prev) => ({ ...prev, commentCount: (prev.commentCount || 0) + 1 }));
+      }
+    } catch (error) {
+      console.error("Error adding comment:", error);
+      alert(error.response?.data?.message || "Failed to add comment");
+    } finally {
+      setCommenting(false);
+    }
+  };
+
+  // ===================== DELETE COMMENT =====================
+  const handleDeleteComment = async (commentId) => {
+    if (!window.confirm("Delete this comment?")) return;
+
+    try {
+      setDeletingCommentId(commentId);
+      const response = await axios.delete(
+        `http://localhost:5000/api/forum/comments/${commentId}`,
+        { data: { userId } }
+      );
+
+      if (response.data.success) {
+        setComments((prev) => prev.filter((c) => c._id !== commentId));
+        setPost((prev) => ({ ...prev, commentCount: Math.max((prev.commentCount || 1) - 1, 0) }));
+      }
+    } catch (error) {
+      console.error("Error deleting comment:", error);
+      alert(error.response?.data?.message || "Failed to delete comment");
+    } finally {
+      setDeletingCommentId(null);
     }
   };
 
@@ -97,11 +175,9 @@ export default function PostDetails() {
     return postDate.toLocaleDateString();
   };
 
-  // ✅ Handle Like/Unlike
   const handleLike = async () => {
     if (!userId) {
-      alert("Please log in to like posts");
-      navigate("/login");
+      navigate("/login", { state: { from: `/forum/${id}` } });
       return;
     }
 
@@ -141,7 +217,7 @@ export default function PostDetails() {
         <div className="text-center">
           <div style={{ fontSize: "4rem", marginBottom: "20px" }}>📭</div>
           <h3>Post not found</h3>
-          <button 
+          <button
             className="btn btn-primary mt-3"
             onClick={() => navigate("/forum")}
             style={{ padding: "12px 30px", borderRadius: "10px" }}
@@ -171,7 +247,7 @@ export default function PostDetails() {
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-lg-9 col-xl-8">
-            {/* Back Button - Positioned above card */}
+            {/* Back Button */}
             <button
               onClick={() => navigate("/forum")}
               style={{
@@ -192,12 +268,12 @@ export default function PostDetails() {
 
             {/* Main Post Card */}
             <div style={{ background: "white", borderRadius: "20px", boxShadow: "0 20px 60px rgba(0,0,0,0.3)", overflow: "hidden", marginBottom: "20px" }}>
-              
+
               {isEditing ? (
                 /* ============ EDIT MODE ============ */
                 <div style={{ padding: "40px 30px" }}>
                   <h4 style={{ marginBottom: "30px", color: "#2d3748" }}>Edit Post</h4>
-                  
+
                   <div style={{ marginBottom: "20px" }}>
                     <label style={{ display: "block", marginBottom: "8px", fontWeight: "600", color: "#4a5568" }}>Title</label>
                     <input
@@ -221,14 +297,14 @@ export default function PostDetails() {
                   </div>
 
                   <div className="d-flex gap-2">
-                    <button 
+                    <button
                       className="btn btn-success"
                       onClick={handleUpdate}
                       style={{ padding: "12px 30px", borderRadius: "10px", fontWeight: "600" }}
                     >
                       💾 Save Changes
                     </button>
-                    <button 
+                    <button
                       className="btn btn-outline-secondary"
                       onClick={() => setIsEditing(false)}
                       style={{ padding: "12px 30px", borderRadius: "10px", fontWeight: "600" }}
@@ -244,11 +320,11 @@ export default function PostDetails() {
                   <div style={{ padding: "30px", borderBottom: "1px solid #e2e8f0" }}>
                     <div className="d-flex justify-content-between align-items-start mb-3">
                       <div>
-                        <span 
-                          style={{ 
+                        <span
+                          style={{
                             display: "inline-block",
-                            padding: "6px 16px", 
-                            borderRadius: "20px", 
+                            padding: "6px 16px",
+                            borderRadius: "20px",
                             fontSize: "13px",
                             fontWeight: "600",
                             background: categoryColors[post.category] || "#6c757d",
@@ -258,11 +334,11 @@ export default function PostDetails() {
                         >
                           {post.category}
                         </span>
-                        <span 
-                          style={{ 
+                        <span
+                          style={{
                             display: "inline-block",
-                            padding: "6px 16px", 
-                            borderRadius: "20px", 
+                            padding: "6px 16px",
+                            borderRadius: "20px",
                             fontSize: "13px",
                             fontWeight: "600",
                             background: "#e2e8f0",
@@ -298,10 +374,10 @@ export default function PostDetails() {
 
                     <div className="d-flex align-items-center gap-3" style={{ color: "#718096", fontSize: "14px" }}>
                       <div className="d-flex align-items-center gap-2">
-                        <div style={{ 
-                          width: "40px", 
-                          height: "40px", 
-                          borderRadius: "50%", 
+                        <div style={{
+                          width: "40px",
+                          height: "40px",
+                          borderRadius: "50%",
                           background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
                           display: "flex",
                           alignItems: "center",
@@ -326,9 +402,9 @@ export default function PostDetails() {
 
                   {/* Content */}
                   <div style={{ padding: "40px 30px" }}>
-                    <div style={{ 
-                      fontSize: "16px", 
-                      lineHeight: "1.8", 
+                    <div style={{
+                      fontSize: "16px",
+                      lineHeight: "1.8",
                       color: "#2d3748",
                       whiteSpace: "pre-wrap",
                       wordBreak: "break-word"
@@ -353,18 +429,6 @@ export default function PostDetails() {
                         color: isLiked ? "white" : "#4a5568",
                         transition: "all 0.3s"
                       }}
-                      onMouseOver={(e) => {
-                        if (!isLiked && !liking) {
-                          e.target.style.background = "#f7fafc";
-                          e.target.style.borderColor = "#cbd5e0";
-                        }
-                      }}
-                      onMouseOut={(e) => {
-                        if (!isLiked) {
-                          e.target.style.background = "transparent";
-                          e.target.style.borderColor = "#e2e8f0";
-                        }
-                      }}
                     >
                       {isLiked ? "❤️" : "🤍"} {isLiked ? "Liked" : "Like"} ({likeCount})
                     </button>
@@ -373,24 +437,199 @@ export default function PostDetails() {
               )}
             </div>
 
-            {/* Comments Section */}
+            {/* ===================== COMMENTS SECTION ===================== */}
             <div style={{ background: "white", borderRadius: "20px", boxShadow: "0 10px 30px rgba(0,0,0,0.2)", padding: "30px" }}>
-              <h5 style={{ marginBottom: "20px", color: "#2d3748", fontWeight: "700" }}>
-                💬 Comments ({post.commentCount || 0})
+              <h5 style={{ marginBottom: "24px", color: "#2d3748", fontWeight: "700" }}>
+                💬 Comments ({comments.length})
               </h5>
-              
-              <div style={{ 
-                padding: "40px", 
-                textAlign: "center", 
-                background: "#f7fafc", 
-                borderRadius: "15px",
-                border: "2px dashed #cbd5e0"
-              }}>
-                <div style={{ fontSize: "3rem", marginBottom: "15px" }}>💭</div>
-                <p style={{ color: "#718096", marginBottom: "5px" }}>Comment section coming soon...</p>
-                <small style={{ color: "#a0aec0" }}>Person 2 will implement the full comment system here</small>
+
+              {/* Add Comment Box */}
+              <div style={{ marginBottom: "28px" }}>
+                <div style={{ display: "flex", gap: "12px", alignItems: "flex-start" }}>
+                  {/* Avatar */}
+                  <div style={{
+                    width: "38px",
+                    height: "38px",
+                    borderRadius: "50%",
+                    background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    color: "white",
+                    fontWeight: "bold",
+                    fontSize: "15px",
+                    flexShrink: 0
+                  }}>
+                    {userName?.charAt(0).toUpperCase()}
+                  </div>
+
+                  <div style={{ flex: 1 }}>
+                    <textarea
+                      rows="3"
+                      placeholder={userId ? "Write a comment..." : "Log in to comment"}
+                      value={commentText}
+                      onChange={(e) => setCommentText(e.target.value)}
+                      disabled={!userId}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" && e.ctrlKey) handleAddComment();
+                      }}
+                      style={{
+                        width: "100%",
+                        padding: "12px 16px",
+                        border: "2px solid #e2e8f0",
+                        borderRadius: "12px",
+                        fontSize: "14px",
+                        resize: "none",
+                        outline: "none",
+                        color: "#2d3748",
+                        transition: "border-color 0.2s",
+                        background: userId ? "white" : "#f7fafc"
+                      }}
+                      onFocus={(e) => (e.target.style.borderColor = "#667eea")}
+                      onBlur={(e) => (e.target.style.borderColor = "#e2e8f0")}
+                    />
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "8px" }}>
+                      <small style={{ color: "#a0aec0" }}>Ctrl + Enter to submit</small>
+                      <button
+                        onClick={handleAddComment}
+                        disabled={commenting || !commentText.trim() || !userId}
+                        style={{
+                          background: commenting || !commentText.trim() || !userId
+                            ? "#e2e8f0"
+                            : "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                          border: "none",
+                          color: commenting || !commentText.trim() || !userId ? "#a0aec0" : "white",
+                          padding: "9px 22px",
+                          borderRadius: "20px",
+                          fontSize: "13px",
+                          fontWeight: "600",
+                          cursor: commenting || !commentText.trim() || !userId ? "not-allowed" : "pointer",
+                          transition: "all 0.2s"
+                        }}
+                      >
+                        {commenting ? "Posting..." : "Post Comment"}
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
+
+              {/* Divider */}
+              <hr style={{ border: "none", borderTop: "1px solid #e2e8f0", marginBottom: "24px" }} />
+
+              {/* Comments List */}
+              {loadingComments ? (
+                <div style={{ textAlign: "center", padding: "30px", color: "#718096" }}>
+                  <div className="spinner-border spinner-border-sm text-primary" style={{ marginRight: "8px" }}></div>
+                  Loading comments...
+                </div>
+              ) : comments.length === 0 ? (
+                <div style={{
+                  padding: "40px",
+                  textAlign: "center",
+                  background: "#f7fafc",
+                  borderRadius: "15px",
+                  border: "2px dashed #cbd5e0"
+                }}>
+                  <div style={{ fontSize: "2.5rem", marginBottom: "12px" }}>💭</div>
+                  <p style={{ color: "#718096", marginBottom: "4px", fontWeight: "500" }}>No comments yet</p>
+                  <small style={{ color: "#a0aec0" }}>Be the first to share your thoughts!</small>
+                </div>
+              ) : (
+                <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+                  {comments.map((comment) => (
+                    <div
+                      key={comment._id}
+                      style={{
+                        display: "flex",
+                        gap: "12px",
+                        alignItems: "flex-start",
+                        padding: "16px",
+                        background: "#f7fafc",
+                        borderRadius: "14px",
+                        border: "1px solid #e2e8f0"
+                      }}
+                    >
+                      {/* Avatar */}
+                      <div style={{
+                        width: "36px",
+                        height: "36px",
+                        borderRadius: "50%",
+                        background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        color: "white",
+                        fontWeight: "bold",
+                        fontSize: "14px",
+                        flexShrink: 0
+                      }}>
+                        {comment.userName?.charAt(0).toUpperCase()}
+                      </div>
+
+                      {/* Comment Body */}
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "6px" }}>
+                          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                            <span style={{ fontWeight: "600", fontSize: "14px", color: "#2d3748" }}>
+                              {comment.userName}
+                            </span>
+                            {comment.userId === userId && (
+                              <span style={{
+                                background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                                color: "white",
+                                fontSize: "10px",
+                                padding: "2px 8px",
+                                borderRadius: "10px",
+                                fontWeight: "600"
+                              }}>
+                                You
+                              </span>
+                            )}
+                          </div>
+                          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                            <span style={{ fontSize: "12px", color: "#a0aec0" }}>
+                              {formatDate(comment.createdAt)}
+                            </span>
+                            {comment.userId === userId && (
+                              <button
+                                onClick={() => handleDeleteComment(comment._id)}
+                                disabled={deletingCommentId === comment._id}
+                                style={{
+                                  background: "none",
+                                  border: "none",
+                                  cursor: deletingCommentId === comment._id ? "not-allowed" : "pointer",
+                                  color: "#fc8181",
+                                  fontSize: "13px",
+                                  padding: "2px 4px",
+                                  borderRadius: "4px",
+                                  opacity: deletingCommentId === comment._id ? 0.5 : 1,
+                                  transition: "color 0.2s"
+                                }}
+                                title="Delete comment"
+                              >
+                                🗑️
+                              </button>
+                            )}
+                          </div>
+                        </div>
+                        <p style={{
+                          margin: 0,
+                          fontSize: "14px",
+                          color: "#4a5568",
+                          lineHeight: "1.6",
+                          wordBreak: "break-word",
+                          whiteSpace: "pre-wrap"
+                        }}>
+                          {comment.content}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
+
           </div>
         </div>
       </div>
