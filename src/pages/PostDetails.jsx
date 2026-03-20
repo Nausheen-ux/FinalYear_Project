@@ -103,7 +103,8 @@ export default function PostDetails() {
       setCommenting(true);
       const response = await axios.post(
         `http://localhost:5000/api/forum/posts/${id}/comments`,
-        { userId, userName, content: commentText.trim() }
+        { content: commentText.trim() },
+        authHeader()
       );
 
       if (response.data.success) {
@@ -114,7 +115,11 @@ export default function PostDetails() {
       }
     } catch (error) {
       console.error("Error adding comment:", error);
-      alert(error.response?.data?.message || "Failed to add comment");
+      if (error.response?.status === 401) {
+        navigate("/login", { state: { from: `/forum/${id}` } });
+      } else {
+        alert(error.response?.data?.message || "Failed to add comment");
+      }
     } finally {
       setCommenting(false);
     }
@@ -132,7 +137,7 @@ export default function PostDetails() {
       setDeletingCommentId(commentId);
       const response = await axios.delete(
         `http://localhost:5000/api/forum/comments/${commentId}`,
-        { data: { userId } }
+        authHeader()
       );
 
       if (response.data.success) {
@@ -141,7 +146,11 @@ export default function PostDetails() {
       }
     } catch (error) {
       console.error("Error deleting comment:", error);
-      alert(error.response?.data?.message || "Failed to delete comment");
+      if (error.response?.status === 401) {
+        navigate("/login", { state: { from: `/forum/${id}` } });
+      } else {
+        alert(error.response?.data?.message || "Failed to delete comment");
+      }
     } finally {
       setDeletingCommentId(null);
     }
@@ -153,7 +162,7 @@ export default function PostDetails() {
     try {
       const response = await axios.delete(
         `http://localhost:5000/api/forum/posts/${id}`,
-        { data: { userId } }
+        authHeader()
       );
 
       if (response.data.success) {
@@ -170,7 +179,8 @@ export default function PostDetails() {
     try {
       const response = await axios.put(
         `http://localhost:5000/api/forum/posts/${id}`,
-        { ...editData, userId }
+        editData,
+        authHeader()
       );
 
       if (response.data.success) {
@@ -209,7 +219,8 @@ export default function PostDetails() {
       setLiking(true);
       const response = await axios.post(
         `http://localhost:5000/api/forum/posts/${id}/like`,
-        { userId }
+        {},
+        authHeader()
       );
 
       if (response.data.success) {
@@ -218,7 +229,11 @@ export default function PostDetails() {
       }
     } catch (error) {
       console.error("Error toggling like:", error);
-      alert("Failed to update like");
+      if (error.response?.status === 401) {
+        navigate("/login", { state: { from: `/forum/${id}` } });
+      } else {
+        alert("Failed to update like");
+      }
     } finally {
       setLiking(false);
     }

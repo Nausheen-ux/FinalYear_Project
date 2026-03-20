@@ -6,7 +6,7 @@ import {
   updatePost,
   deletePost,
   getUserPosts,
-  toggleLike  // ✅ Add this
+  toggleLike
 } from "../controllers/postController.js";
 
 import {
@@ -15,33 +15,24 @@ import {
   deleteComment
 } from "../controllers/commentController.js";
 
+import { protect } from "../middleware/authMiddleware.js";
+
 const router = express.Router();
 
 // ==================== POST ROUTES ====================
-// Create a new post
-router.post("/posts", createPost);
-
-// Get all posts (with filters)
+router.post("/posts", protect, createPost);
 router.get("/posts", getAllPosts);
-
-// Get single post by ID
 router.get("/posts/:id", getPostById);
-
-// Update post
-router.put("/posts/:id", updatePost);
-
-// Delete post
-router.delete("/posts/:id", deletePost);
-
-// Get posts by specific user
+router.put("/posts/:id", protect, updatePost);
+router.delete("/posts/:id", protect, deletePost);
 router.get("/users/:userId/posts", getUserPosts);
 
-router.get("/posts/:postId/comments", getComments);
-router.post("/posts/:postId/comments", addComment);
-router.delete("/comments/:id", deleteComment);
+// ==================== LIKE ROUTES ====================
+router.post("/posts/:id/like", protect, toggleLike);
 
-// ==================== PLACEHOLDER FOR PERSON 2 & 3 ====================
-// Person 2 will add comment routes here
-// Person 3 will add like routes here
-router.post("/posts/:id/like", toggleLike);
+// ==================== COMMENT ROUTES ====================
+router.get("/posts/:postId/comments", getComments);
+router.post("/posts/:postId/comments", protect, addComment);
+router.delete("/comments/:id", protect, deleteComment);
+
 export default router;

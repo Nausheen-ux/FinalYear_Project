@@ -5,7 +5,6 @@ export const createPost = async (req, res) => {
   try {
     const { title, content, category, city } = req.body;
 
-    // Get user info from localStorage (frontend sends this)
     const { authorId, authorName } = req.body;
 
     if (!title || !content || !category || !city || !authorId || !authorName) {
@@ -47,17 +46,16 @@ export const getAllPosts = async (req, res) => {
   try {
     const { category, city, search, sortBy } = req.query;
 
-    // Build query
     let query = {};
-    
+
     if (category && category !== "All") {
       query.category = category;
     }
-    
+
     if (city && city !== "All") {
       query.city = city;
     }
-    
+
     if (search) {
       query.$or = [
         { title: { $regex: search, $options: "i" } },
@@ -65,7 +63,6 @@ export const getAllPosts = async (req, res) => {
       ];
     }
 
-    // Build sort
     let sort = {};
     switch (sortBy) {
       case "latest":
@@ -78,13 +75,10 @@ export const getAllPosts = async (req, res) => {
         sort = { likeCount: -1 };
         break;
       default:
-        sort = { createdAt: -1 }; // default to latest
+        sort = { createdAt: -1 };
     }
 
-    const posts = await Post.find(query)
-      .sort(sort)
-      // ✅ REMOVED: .populate("commentCount") - will be added by Person 2
-      .lean();
+    const posts = await Post.find(query).sort(sort).lean();
 
     res.status(200).json({
       success: true,
@@ -106,9 +100,7 @@ export const getPostById = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const post = await Post.findById(id)
-      // ✅ REMOVED: .populate("commentCount") - will be added by Person 2
-      .lean();
+    const post = await Post.findById(id).lean();
 
     if (!post) {
       return res.status(404).json({
@@ -146,7 +138,6 @@ export const updatePost = async (req, res) => {
       });
     }
 
-    // Check if user is the author
     if (post.authorId.toString() !== userId) {
       return res.status(403).json({
         success: false,
@@ -154,7 +145,6 @@ export const updatePost = async (req, res) => {
       });
     }
 
-    // Update fields
     if (title) post.title = title;
     if (content) post.content = content;
     if (category) post.category = category;
@@ -192,7 +182,6 @@ export const deletePost = async (req, res) => {
       });
     }
 
-    // Check if user is the author
     if (post.authorId.toString() !== userId) {
       return res.status(403).json({
         success: false,
@@ -223,7 +212,6 @@ export const getUserPosts = async (req, res) => {
 
     const posts = await Post.find({ authorId: userId })
       .sort({ createdAt: -1 })
-      // ✅ REMOVED: .populate("commentCount") - will be added by Person 2
       .lean();
 
     res.status(200).json({
@@ -240,18 +228,15 @@ export const getUserPosts = async (req, res) => {
     });
   }
 };
+
 // ======================= LIKE/UNLIKE POST =======================
+// Protected route — req.user is set by the protect middleware
 export const toggleLike = async (req, res) => {
   try {
     const { id } = req.params;
-    const { userId } = req.body;
 
-    if (!userId) {
-      return res.status(400).json({
-        success: false,
-        message: "User ID is required"
-      });
-    }
+    // Use verified user from token — never trust userId from body
+    const userId = req.user._id.toString();
 
     const post = await Post.findById(id);
 
@@ -262,34 +247,23 @@ export const toggleLike = async (req, res) => {
       });
     }
 
-    // Check if user already liked
     const likeIndex = post.likes.indexOf(userId);
 
     if (likeIndex > -1) {
-      // Unlike - remove user from likes array
       post.likes.splice(likeIndex, 1);
-      post.likeCount = post.likes.length;
-      await post.save();
-
-      return res.status(200).json({
-        success: true,
-        message: "Post unliked",
-        liked: false,
-        likeCount: post.likeCount
-      });
     } else {
-      // Like - add user to likes array
       post.likes.push(userId);
-      post.likeCount = post.likes.length;
-      await post.save();
-
-      return res.status(200).json({
-        success: true,
-        message: "Post liked",
-        liked: true,
-        likeCount: post.likeCount
-      });
     }
+
+    post.likeCount = post.likes.length;
+    await post.save();
+
+    return res.status(200).json({
+      success: true,
+      message: likeIndex > -1 ? "Post unliked" : "Post liked",
+      liked: likeIndex === -1,
+      likeCount: post.likeCount
+    });
   } catch (error) {
     console.error("Error toggling like:", error);
     res.status(500).json({
