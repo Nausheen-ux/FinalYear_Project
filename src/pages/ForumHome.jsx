@@ -39,7 +39,6 @@ export default function ForumHome() {
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const categoryFromUrl = urlParams.get("category");
-    
     if (categoryFromUrl) {
       setSelectedCategory(categoryFromUrl);
     }
@@ -53,7 +52,7 @@ export default function ForumHome() {
     try {
       setLoading(true);
       const params = new URLSearchParams();
-      
+
       if (selectedCategory !== "All") params.append("category", selectedCategory);
       if (selectedCity !== "All") params.append("city", selectedCity);
       if (searchQuery) params.append("search", searchQuery);
@@ -83,6 +82,17 @@ export default function ForumHome() {
     return category ? category.color : "#6c757d";
   };
 
+  // ✅ Auth guard — redirect to login if not logged in
+  const handleCreatePost = () => {
+    const token = localStorage.getItem("token");
+    const userId = localStorage.getItem("userId");
+    if (!token || !userId) {
+      navigate("/login", { state: { from: "/forum/create" } });
+      return;
+    }
+    navigate("/forum/create");
+  };
+
   return (
     <div className="forum-page">
       {/* Header */}
@@ -100,7 +110,7 @@ export default function ForumHome() {
             </div>
             <button
               className="btn btn-light"
-              onClick={() => navigate("/forum/create")}
+              onClick={handleCreatePost}
             >
               ➕ Create Post
             </button>
@@ -120,8 +130,8 @@ export default function ForumHome() {
                   className={`category-item ${selectedCategory === category.name ? 'active' : ''}`}
                   onClick={() => handleCategoryClick(category.name)}
                   style={{
-                    borderLeft: selectedCategory === category.name 
-                      ? `4px solid ${category.color}` 
+                    borderLeft: selectedCategory === category.name
+                      ? `4px solid ${category.color}`
                       : '4px solid transparent'
                   }}
                 >
@@ -210,7 +220,7 @@ export default function ForumHome() {
                 {CATEGORIES.find(c => c.name === selectedCategory)?.icon}
               </span>
               <span className="ms-2">{selectedCategory}</span>
-              <button 
+              <button
                 className="btn btn-sm btn-link"
                 onClick={() => setSelectedCategory("All")}
               >
@@ -234,7 +244,7 @@ export default function ForumHome() {
               <p className="text-muted">Be the first to create a post in this category!</p>
               <button
                 className="btn btn-primary mt-3"
-                onClick={() => navigate("/forum/create")}
+                onClick={handleCreatePost}
               >
                 Create Post
               </button>

@@ -254,9 +254,16 @@ export default function LandingPage() {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
-  // handle logout
+  // handle logout — clears all auth keys and notifies other components
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("role");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("ownerId");
+    localStorage.removeItem("ownerName");
+    localStorage.removeItem("userName");
+    // Broadcast logout so any mounted component (e.g. PostDetails) clears its auth state
+    window.dispatchEvent(new Event("auth-logout"));
     navigate("/login");
   };
 

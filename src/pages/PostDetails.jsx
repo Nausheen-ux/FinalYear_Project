@@ -20,12 +20,32 @@ export default function PostDetails() {
   const [loadingComments, setLoadingComments] = useState(false);
   const [deletingCommentId, setDeletingCommentId] = useState(null);
 
-  // Read on every render so values are always fresh after login/logout
-  const userId = localStorage.getItem("userId");
-  const userName =
+  // useState so React re-renders properly when auth changes (login/logout)
+  const [userId, setUserId] = React.useState(localStorage.getItem("userId"));
+  const [userName, setUserName] = React.useState(
     localStorage.getItem("ownerName") ||
     localStorage.getItem("userName") ||
-    "Anonymous";
+    "Anonymous"
+  );
+
+  // Sync auth from localStorage on focus AND on logout event from any page
+  React.useEffect(() => {
+    const syncAuth = () => {
+      setUserId(localStorage.getItem("userId"));
+      setUserName(
+        localStorage.getItem("ownerName") ||
+        localStorage.getItem("userName") ||
+        "Anonymous"
+      );
+    };
+    syncAuth();
+    window.addEventListener("focus", syncAuth);
+    window.addEventListener("auth-logout", syncAuth);
+    return () => {
+      window.removeEventListener("focus", syncAuth);
+      window.removeEventListener("auth-logout", syncAuth);
+    };
+  }, []);
 
   useEffect(() => {
     fetchPost();
@@ -102,6 +122,10 @@ export default function PostDetails() {
 
   // ===================== DELETE COMMENT =====================
   const handleDeleteComment = async (commentId) => {
+    if (!userId) {
+      navigate("/login", { state: { from: `/forum/${id}` } });
+      return;
+    }
     if (!window.confirm("Delete this comment?")) return;
 
     try {
@@ -574,7 +598,7 @@ export default function PostDetails() {
                             <span style={{ fontWeight: "600", fontSize: "14px", color: "#2d3748" }}>
                               {comment.userName}
                             </span>
-                            {comment.userId === userId && (
+                            {userId && comment.userId?.toString() === userId && (
                               <span style={{
                                 background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
                                 color: "white",
@@ -591,7 +615,7 @@ export default function PostDetails() {
                             <span style={{ fontSize: "12px", color: "#a0aec0" }}>
                               {formatDate(comment.createdAt)}
                             </span>
-                            {comment.userId === userId && (
+                            {userId && comment.userId?.toString() === userId && (
                               <button
                                 onClick={() => handleDeleteComment(comment._id)}
                                 disabled={deletingCommentId === comment._id}
