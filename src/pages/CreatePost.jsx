@@ -8,9 +8,9 @@ const CATEGORIES = [
   "Cafes & Restaurants",
   "Events & Meetups",
   "Accommodation Tips",
-  "Transportation",
   "Study Groups",
-  "General Discussion"
+  "General Discussion",
+  "Roommate Finder"
 ];
 
 const CITIES = [

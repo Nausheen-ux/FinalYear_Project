@@ -56,9 +56,183 @@ const EMERGENCY_DATA = {
   { type: "Utility", name: "Dead Animal Removal", contact: "033-22445112" },
   { type: "Animal", name: "Animal Ambulance (Happy Hearts NGO)", contact: "6289770078, 9836162918" },
   { type: "Development", name: "New Town Kolkata Development Authority", contact: "1800-103-7652" }
-]
+],
 
-  // add more cities here later
+  mumbai:[
+{ type: "Police", name: "Mumbai Police Control Room", contact: "100" },
+{ type: "Police", name: "Mumbai Police HQ", contact: "022-22620111" },
+{ type: "Cyber Security", name: "National Cyber Crime Helpline", contact: "1930" },
+{ type: "Control Room", name: "Disaster Management Mumbai", contact: "022-22027990" },
+{ type: "Fire", name: "Mumbai Fire Brigade", contact: "101" },
+{ type: "Ambulance", name: "Emergency Ambulance", contact: "108" },
+{ type: "Medical", name: "Emergency Medical Helpline", contact: "102" },
+{ type: "Women", name: "Women Helpline", contact: "1091" },
+{ type: "Child", name: "Child Helpline", contact: "1098" },
+{ type: "Traffic", name: "Mumbai Traffic Police", contact: "022-24937710" },
+{ type: "Anti Poison", name: "Poison Control", contact: "022-23735555" },
+
+// Hospitals (Govt + Private)
+{ type: "Hospital", name: "KEM Hospital", contact: "022-24107000" },
+{ type: "Hospital", name: "JJ Hospital", contact: "022-23735555" },
+{ type: "Hospital", name: "Nair Hospital", contact: "022-23027000" },
+{ type: "Hospital", name: "Lilavati Hospital", contact: "022-26751000" },
+{ type: "Hospital", name: "Kokilaben Dhirubhai Ambani Hospital", contact: "022-42696969" },
+{ type: "Hospital", name: "Fortis Hospital Mulund", contact: "022-67994444" },
+
+// Blood Bank
+{ type: "Blood Bank", name: "Tata Memorial Blood Bank", contact: "022-24177000" },
+{ type: "Blood Bank", name: "KEM Blood Bank", contact: "022-24107000" },
+
+// Government & Municipal
+{ type: "Government", name: "BMC Helpline", contact: "1916" },
+{ type: "Municipal", name: "BMC Control Room", contact: "022-22694725" },
+
+// Utilities
+{ type: "Electricity", name: "BEST Electricity", contact: "1912" },
+{ type: "Water", name: "Water Supply BMC", contact: "1916" },
+
+// Animal
+{ type: "Animal", name: "SPCA Mumbai", contact: "022-23806060" },
+
+// Development
+{ type: "Development", name: "Mumbai Metropolitan Region Development Authority", contact: "022-26597400" }
+],
+  delhi:[
+{ type: "Police", name: "Delhi Police Control Room", contact: "100" },
+{ type: "Cyber Security", name: "National Cyber Crime Helpline", contact: "1930" },
+{ type: "Control Room", name: "Delhi Disaster Management", contact: "1077" },
+{ type: "Fire", name: "Delhi Fire Service", contact: "101" },
+{ type: "Ambulance", name: "Ambulance Service", contact: "102" },
+{ type: "Women", name: "Women Helpline", contact: "181" },
+{ type: "Child", name: "Child Helpline", contact: "1098" },
+{ type: "Traffic", name: "Delhi Traffic Police", contact: "1095" },
+{ type: "Anti Poison", name: "Poison Control AIIMS", contact: "011-26593677" },
+
+// Hospitals
+{ type: "Hospital", name: "AIIMS Delhi", contact: "011-26588500" },
+{ type: "Hospital", name: "Safdarjung Hospital", contact: "011-26707444" },
+{ type: "Hospital", name: "LNJP Hospital", contact: "011-23232400" },
+{ type: "Hospital", name: "Apollo Hospital Delhi", contact: "011-71791090" },
+{ type: "Hospital", name: "Fortis Escorts Hospital", contact: "011-47135000" },
+
+// Blood Bank
+{ type: "Blood Bank", name: "Red Cross Blood Bank", contact: "011-23359322" },
+
+// Government
+{ type: "Government", name: "Delhi Govt Helpline", contact: "1031" },
+
+// Municipal
+{ type: "Municipal", name: "MCD Helpline", contact: "155305" },
+
+// Utilities
+{ type: "Electricity", name: "Electricity Complaint", contact: "1912" },
+{ type: "Water", name: "Delhi Jal Board", contact: "1916" },
+
+// Animal
+{ type: "Animal", name: "Animal Helpline Delhi", contact: "011-23890351" }
+],
+
+bangalore:[
+{ type: "Police", name: "Bangalore Police Control Room", contact: "100" },
+{ type: "Cyber Security", name: "Cyber Crime Helpline", contact: "1930" },
+{ type: "Control Room", name: "Disaster Management", contact: "1077" },
+{ type: "Fire", name: "Fire Service", contact: "101" },
+{ type: "Ambulance", name: "Ambulance", contact: "108" },
+{ type: "Women", name: "Women Helpline", contact: "1091" },
+{ type: "Traffic", name: "Traffic Police", contact: "080-25588444" },
+
+// Hospitals
+{ type: "Hospital", name: "Victoria Hospital", contact: "080-26701150" },
+{ type: "Hospital", name: "Bowring Hospital", contact: "080-25591325" },
+{ type: "Hospital", name: "Manipal Hospital", contact: "080-25024444" },
+{ type: "Hospital", name: "Apollo Hospital Bangalore", contact: "080-26304050" },
+{ type: "Hospital", name: "Fortis Hospital Bangalore", contact: "080-66214444" },
+
+// Blood Bank
+{ type: "Blood Bank", name: "Indian Red Cross Blood Bank", contact: "080-22268435" },
+
+// Municipal
+{ type: "Municipal", name: "BBMP Helpline", contact: "080-22660000" },
+
+// Utilities
+{ type: "Electricity", name: "BESCOM", contact: "1912" },
+{ type: "Water", name: "BWSSB", contact: "1916" },
+
+// Animal
+{ type: "Animal", name: "Animal Helpline Bangalore", contact: "080-22943333" }
+],
+
+chennai:[
+{ type: "Police", name: "Chennai Police", contact: "100" },
+{ type: "Cyber Security", name: "Cyber Crime", contact: "1930" },
+{ type: "Fire", name: "Fire Service", contact: "101" },
+{ type: "Ambulance", name: "Ambulance", contact: "108" },
+{ type: "Women", name: "Women Helpline", contact: "1091" },
+{ type: "Traffic", name: "Traffic Police", contact: "044-28447700" },
+
+// Hospitals
+{ type: "Hospital", name: "Rajiv Gandhi Govt Hospital", contact: "044-25305000" },
+{ type: "Hospital", name: "Stanley Medical College Hospital", contact: "044-25281347" },
+{ type: "Hospital", name: "Apollo Hospital Chennai", contact: "044-28290200" },
+{ type: "Hospital", name: "Fortis Malar Hospital", contact: "044-42892222" },
+
+// Blood Bank
+{ type: "Blood Bank", name: "Government Blood Bank Chennai", contact: "044-25305000" },
+
+// Municipal
+{ type: "Municipal", name: "Chennai Corporation", contact: "1913" },
+
+// Utilities
+{ type: "Electricity", name: "TNEB", contact: "1912" },
+{ type: "Water", name: "Metro Water", contact: "044-45674567" }
+],
+
+hyderabad:[
+{ type: "Police", name: "Hyderabad Police", contact: "100" },
+{ type: "Cyber Security", name: "Cyber Crime", contact: "1930" },
+{ type: "Fire", name: "Fire Service", contact: "101" },
+{ type: "Ambulance", name: "Ambulance", contact: "108" },
+{ type: "Women", name: "Women Helpline", contact: "181" },
+
+// Hospitals
+{ type: "Hospital", name: "Osmania Hospital", contact: "040-24600121" },
+{ type: "Hospital", name: "Gandhi Hospital", contact: "040-27505566" },
+{ type: "Hospital", name: "Apollo Hospital Hyderabad", contact: "040-23607777" },
+{ type: "Hospital", name: "Yashoda Hospital", contact: "040-45674567" },
+
+// Blood Bank
+{ type: "Blood Bank", name: "Red Cross Hyderabad", contact: "040-24745200" },
+
+// Municipal
+{ type: "Municipal", name: "GHMC", contact: "040-21111111" },
+
+// Utilities
+{ type: "Electricity", name: "Electricity Complaint", contact: "1912" },
+{ type: "Water", name: "Water Supply", contact: "155313" }
+],
+
+pune:[
+{ type: "Police", name: "Pune Police", contact: "100" },
+{ type: "Cyber Security", name: "Cyber Crime", contact: "1930" },
+{ type: "Fire", name: "Fire Service", contact: "101" },
+{ type: "Ambulance", name: "Ambulance", contact: "108" },
+
+// Hospitals
+{ type: "Hospital", name: "Sassoon Hospital", contact: "020-26128000" },
+{ type: "Hospital", name: "Jehangir Hospital", contact: "020-66819999" },
+{ type: "Hospital", name: "Ruby Hall Clinic", contact: "020-26163391" },
+
+// Blood Bank
+{ type: "Blood Bank", name: "Sassoon Blood Bank", contact: "020-26128000" },
+
+// Municipal
+{ type: "Municipal", name: "Pune Municipal Corporation", contact: "18001030222" },
+
+// Utilities
+{ type: "Electricity", name: "MSEDCL", contact: "1912" },
+{ type: "Water", name: "Water Supply Pune", contact: "020-25650200" }
+]
+// add more cities here later
 };
 
 export default function EmergencyContacts() {
