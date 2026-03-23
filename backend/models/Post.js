@@ -45,7 +45,6 @@ const postSchema = new mongoose.Schema(
       type: [String],
       default: []
     },
-    // Person 3 will add these later:
     likes: {
       type: [mongoose.Schema.Types.ObjectId],
       ref: "User",
@@ -55,21 +54,16 @@ const postSchema = new mongoose.Schema(
       type: Number,
       default: 0
     },
-    // ✅ REMOVED: commentCount virtual - Person 2 will add this later with Comment model
+    // ✅ Added by Person 2 — tracks comment count directly on the post
+    commentCount: {
+      type: Number,
+      default: 0
+    }
   },
-  { 
+  {
     timestamps: true
-    // ✅ REMOVED: toJSON and toObject virtuals until Comment model exists
   }
 );
-
-// ✅ COMMENTED OUT: Virtual for comment count - will be added by Person 2
-// postSchema.virtual("commentCount", {
-//   ref: "Comment",
-//   localField: "_id",
-//   foreignField: "postId",
-//   count: true
-// });
 
 const Post = mongoose.model("Post", postSchema);
 export default Post;

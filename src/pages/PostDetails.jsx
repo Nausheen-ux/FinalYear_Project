@@ -194,6 +194,11 @@ export default function PostDetails() {
     }
   };
 
+  // ===================== AUTH HEADER HELPER =====================
+  const authHeader = () => ({
+    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+  });
+
   const formatDate = (date) => {
     const now = new Date();
     const postDate = new Date(date);

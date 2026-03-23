@@ -39,31 +39,31 @@ export default function CreatePost() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     const userId = localStorage.getItem("userId");
-
     if (!token || !userId) {
       alert("Please login first");
-      navigate("/login");
+      navigate("/login", { state: { from: "/forum/create" } });
     }
   }, [navigate]);
 
-
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-
   const handleSubmit = async (e) => {
-
     e.preventDefault();
 
+    const token = localStorage.getItem("token");
     const userId = localStorage.getItem("userId");
     const userName =
       localStorage.getItem("ownerName") ||
       localStorage.getItem("userName") ||
       "Anonymous";
+
+    if (!token || !userId) {
+      alert("Please login first");
+      navigate("/login", { state: { from: "/forum/create" } });
+      return;
+    }
 
     if (!formData.title || !formData.content || !formData.category || !formData.city) {
       alert("Fill all fields");
@@ -71,81 +71,55 @@ export default function CreatePost() {
     }
 
     try {
-
       setLoading(true);
 
       const res = await axios.post(
         "http://localhost:5000/api/forum/posts",
-        {
-          ...formData,
-          authorId: userId,
-          authorName: userName
-        }
+        { ...formData, authorId: userId, authorName: userName },
+        { headers: { Authorization: `Bearer ${token}` } }  // ✅ send token
       );
 
       if (res.data.success) {
-
         alert("Post created successfully");
-
         navigate("/forum");
-
       }
 
-    }
-    catch (err) {
-
-      alert("Error creating post");
-
-    }
-    finally {
-
+    } catch (err) {
+      console.error("Error creating post:", err);
+      if (err.response?.status === 401) {
+        alert("Please login first");
+        navigate("/login", { state: { from: "/forum/create" } });
+      } else {
+        alert(err.response?.data?.message || "Error creating post");
+      }
+    } finally {
       setLoading(false);
-
     }
-
   };
 
-
-
   return (
-
     <div className="bg-light min-vh-100 py-5">
-
       <div className="container">
 
         {/* Header */}
-
         <div className="d-flex justify-content-between align-items-center mb-4">
-
           <h2 className="fw-bold">Create Post</h2>
-
           <button
             className="btn btn-outline-secondary"
             onClick={() => navigate("/forum")}
           >
             Back
           </button>
-
         </div>
 
-
         {/* Card */}
-
         <div className="card shadow-lg border-0">
-
           <div className="card-body p-4 p-md-5">
-
-
             <form onSubmit={handleSubmit}>
 
               {/* Title */}
-
               <div className="mb-4">
-
-                <label className="form-label fw-semibold">
-                  Title
-                </label>
-
+                <label className="form-label fw-semibold">Title</label>
                 <input
                   type="text"
                   name="title"
@@ -156,24 +130,13 @@ export default function CreatePost() {
                   maxLength={200}
                   required
                 />
-
-                <small className="text-muted">
-                  {formData.title.length}/200 characters
-                </small>
-
+                <small className="text-muted">{formData.title.length}/200 characters</small>
               </div>
 
-
               {/* Category + City */}
-
               <div className="row">
-
                 <div className="col-md-6 mb-4">
-
-                  <label className="form-label fw-semibold">
-                    Category
-                  </label>
-
+                  <label className="form-label fw-semibold">Category</label>
                   <select
                     name="category"
                     className="form-select form-select-lg"
@@ -181,24 +144,15 @@ export default function CreatePost() {
                     onChange={handleChange}
                     required
                   >
-
                     <option value="">Select category</option>
-
                     {CATEGORIES.map(cat => (
                       <option key={cat}>{cat}</option>
                     ))}
-
                   </select>
-
                 </div>
 
-
                 <div className="col-md-6 mb-4">
-
-                  <label className="form-label fw-semibold">
-                    City
-                  </label>
-
+                  <label className="form-label fw-semibold">City</label>
                   <select
                     name="city"
                     className="form-select form-select-lg"
@@ -206,28 +160,17 @@ export default function CreatePost() {
                     onChange={handleChange}
                     required
                   >
-
                     <option value="">Select city</option>
-
                     {CITIES.map(city => (
                       <option key={city}>{city}</option>
                     ))}
-
                   </select>
-
                 </div>
-
               </div>
 
-
               {/* Content */}
-
               <div className="mb-4">
-
-                <label className="form-label fw-semibold">
-                  Content
-                </label>
-
+                <label className="form-label fw-semibold">Content</label>
                 <textarea
                   name="content"
                   className="form-control"
@@ -238,29 +181,18 @@ export default function CreatePost() {
                   maxLength={5000}
                   required
                 />
-
-                <small className="text-muted">
-                  {formData.content.length}/5000 characters
-                </small>
-
+                <small className="text-muted">{formData.content.length}/5000 characters</small>
               </div>
 
-
               {/* Buttons */}
-
               <div className="d-flex gap-3">
-
                 <button
                   type="submit"
                   className="btn btn-primary btn-lg"
                   disabled={loading}
                 >
-
                   {loading ? "Publishing..." : "Publish"}
-
                 </button>
-
-
                 <button
                   type="button"
                   className="btn btn-outline-secondary btn-lg"
@@ -268,20 +200,13 @@ export default function CreatePost() {
                 >
                   Cancel
                 </button>
-
               </div>
 
-
             </form>
-
           </div>
-
         </div>
 
       </div>
-
     </div>
-
   );
-
 }
