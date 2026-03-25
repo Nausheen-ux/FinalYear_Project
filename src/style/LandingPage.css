@@ -1,4 +1,3 @@
-
 .landing-container {
   min-height: 100vh;
   background: linear-gradient(120deg, #ffb6c1 0%, #ffd166 40%, #ff6f91 70%, #6ec5e9 100%);
@@ -9,6 +8,10 @@
   overflow-x: hidden;
   font-family: 'Poppins', sans-serif;
   position: relative;
+  .landing-container {
+  padding-left: 30px;
+  padding-right: 30px;
+}
 }
 
 /* Navbar */
@@ -57,14 +60,7 @@
   transform: scale(1.1);
 }
 
-/* Hero Section */
-.hero {
-  text-align: center;
-  margin-top: 90px;
-  max-width: 700px;
-  animation: fadeIn 1.5s ease;
-  padding: 50px 20px;
-}
+
 
 .hero-title {
   font-size: 3.2rem;
@@ -147,10 +143,12 @@
 
 /* Footer */
 .footer {
-  position: absolute;
-  bottom: 1.5rem;
+  text-align: center;
+  margin-top: 60px;   /* pushes footer below last line */
+  padding-bottom: 30px; /* adds breathing space */
   color: #333;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
+  font-weight: 500;
 }
 
 /* Animation */
@@ -162,16 +160,15 @@
 /* ---- Discussion Forum Box ---- */
 .forum-container {
   position: absolute;
-  left: 40px;
-  top: 180px;
-  width: 280px;
-  padding: 20px;
+  left: 50px;        /* increased from 40px */
+  top: 200px;
+  width: 330px;
+  padding: 22px;
   border-radius: 18px;
   background: rgba(255, 255, 255, 0.35);
   backdrop-filter: blur(10px);
   border: 2px solid rgba(255, 255, 255, 0.4);
   box-shadow: 0px 10px 25px rgba(255, 100, 180, 0.35);
-  animation: slideIn 0.7s ease-out;
 }
 
 @keyframes slideIn {
@@ -245,8 +242,8 @@
 /* 🌈 Hero Upgrade */
 .hero {
   text-align: center;
-  margin-top: 120px;
-  max-width: 750px;
+  margin-top: 200px;
+  max-width: 700px;
   padding: 60px 30px;
   border-radius: 25px;
   background: rgba(255, 255, 255, 0.25);
@@ -304,4 +301,180 @@
   padding: 6px 12px;
   border-radius: 20px;
   box-shadow: 0px 3px 10px rgba(0,0,0,0.1);
+}
+/* ========== CITY TICKER ========== */
+.city-ticker {
+  margin-top: 20px;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  color: #333;
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+.ticker-track {
+  display: inline-block;
+  padding-left: 50%;
+  animation: tickerMove 18s linear infinite;
+}
+
+@keyframes tickerMove {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100%); }
+}
+
+/* ========== ABOUT SECTION ========== */
+.about-section {
+  margin-top: 200px;
+  max-width: 1000px;
+  text-align: center;
+  padding: 30px;
+  color: #2a2a2a;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+/* ========== FOUNDER SECTION ========== */
+.founder-section {
+  margin-top: 80px;
+  max-width: 800px;
+  text-align: center;
+  padding: 20px;
+}
+
+.founder-card {
+  margin-top: 20px;
+  padding: 20px;
+  background: rgba(255,255,255,0.4);
+  backdrop-filter: blur(8px);
+  border-radius: 20px;
+  box-shadow: 0 6px 20px rgba(255, 80, 150, 0.25);
+}
+
+.founder-photo {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid white;
+  margin-bottom: 10px;
+}
+
+/* ⭐ SIDE SCROLL CITIES ⭐ */
+.cities-side-scroll {
+  display: flex;
+  gap: 30px;
+  overflow-x: scroll;
+  padding: 15px;
+  scroll-behavior: smooth;
+  margin-top: 10px;
+
+  /* Hide scrollbar */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.cities-side-scroll::-webkit-scrollbar {
+  display: none; /* Chrome */
+}
+
+.city-card {
+  min-width: 160px;
+  background: white;
+  border-radius: 12px;
+  text-align: center;
+  padding: 10px;
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.15);
+  transition: transform 0.3s ease;
+}
+
+.city-card:hover {
+  transform: scale(1.05);
+}
+
+.city-image {
+  width: 100%;
+  height: 110px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.city-name {
+  margin-top: 8px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.cities-container {
+  margin-top: 350px; /* move scrolling cards lower */
+  width: 100%;
+  padding-bottom: 40px; /* spacing below */
+}
+.cities-title {
+  margin-top: 20px;
+}
+
+/* ---- Cities Section ---- */
+
+.cities-container {
+  margin-top: 20px;
+  width: 100%;
+  text-align: center;
+}
+
+.cities-title {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 25px;
+  font-weight: 700;
+  color: #0b3c8c;
+}
+
+/* Wrapper */
+.cities-scroll-wrapper {
+  overflow-x: hidden;
+  width: 100%;
+  padding: 10px 0;
+}
+
+/* Scrolling strip */
+.cities-scroll {
+  display: flex;
+  gap: 15px;
+  animation: scrollCities 30s linear infinite;
+}
+
+/* City cards */
+.city-card {
+  min-width: 180px;
+  max-width: 180px;
+  background: white;
+  border-radius: 15px;
+  padding: 10px;
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.city-image {
+  width: 100%;
+  height: 120px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.city-name {
+  margin-top: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #222;
+}
+
+/* Auto-scroll animation */
+@keyframes scrollCities {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
