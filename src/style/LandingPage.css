@@ -1,227 +1,309 @@
 
+/* ===========================================================
+   GLOBAL — Import & Variables
+=========================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap');
 
+:root {
+  --blue-dark:    #0b4cc2;
+  --blue-mid:     #1976d2;
+  --blue-light:   #42a5f5;
+  --blue-pale:    #e8f0ff;
+  --pink-pale:    #fce4ec;
+  --white-glass:  rgba(255,255,255,0.65);
+  --shadow-soft:  0 6px 24px rgba(0,0,0,0.08);
+  --radius-lg:    22px;
+  --radius-md:    16px;
+  --radius-sm:    10px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #f5f8ff;
+  color: #333;
+  -webkit-font-smoothing: antialiased;
+}
 
 /* ===========================================================
    GLOBAL CONTAINER
 =========================================================== */
 .landing-container {
   min-height: 100vh;
-  background: linear-gradient(120deg, #ffb6c1 0%, #ffd166 40%, #ff6f91 70%, #6ec5e9 100%);
+  background: linear-gradient(120deg, #e3f2fd, #fce4ec);
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: #3d3d3d;
   overflow-x: hidden;
-  font-family: 'Poppins', sans-serif;
-  padding: 0 20px;
+  padding: 0;
 }
 
 /* ===========================================================
-   NAVBAR (SCROLLS WITH PAGE)
+   NAVBAR
 =========================================================== */
 .navbar {
-  position: relative; /* FIXED removed */
   width: 100%;
-  padding: 12px 40px;
+  padding: 14px 5%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 10;
+  background: rgba(255,255,255,0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 .logo {
-  font-size: 2rem;
+  font-size: clamp(1.3rem, 4vw, 1.9rem);
   font-weight: 900;
   font-style: italic;
-  color: white;
-  text-shadow:
-    -2px -2px 0 #ff3c83,
-    2px -2px 0 #ff3c83,
-    -2px 2px 0 #ff3c83,
-    2px 2px 0 #ff3c83;
+  color: var(--blue-mid);
+  white-space: nowrap;
 }
 
 .nav-links {
   display: flex;
-  gap: 1rem;
+  align-items: center;
+  gap: clamp(6px, 2vw, 14px);
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
 .nav-links button {
   background: none;
   border: none;
-  font-size: 1rem;
+  font-size: clamp(0.78rem, 2.2vw, 0.95rem);
   cursor: pointer;
-  transition: 0.3s;
-  color: #3d3d3d;
+  color: #444;
+  font-weight: 500;
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  transition: color 0.2s, background 0.2s;
+  white-space: nowrap;
 }
 
 .nav-links button:hover {
-  color: #ff3c83;
-  transform: scale(1.1);
+  color: var(--blue-mid);
+  background: rgba(25,118,210,0.07);
 }
 
 /* ===========================================================
-   HERO SECTION
+   FORUM SECTION
+=========================================================== */
+.forum-section {
+  width: 100%;
+  text-align: center;
+  background: linear-gradient(to right, var(--blue-pale), #f5eaff);
+  padding: clamp(30px, 6vw, 60px) 5% clamp(40px, 7vw, 70px);
+  border-radius: 0 0 28px 28px;
+}
+
+.forum-title {
+  font-size: clamp(1.5rem, 4.5vw, 2rem);
+  font-weight: 700;
+  color: var(--blue-dark);
+  cursor: pointer;
+  transition: color 0.2s, transform 0.2s;
+}
+
+.forum-title:hover {
+  color: #0d47a1;
+  transform: scale(1.03);
+}
+
+.forum-subtitle {
+  margin-top: 4px;
+  color: #666;
+  font-size: clamp(0.8rem, 2.5vw, 0.95rem);
+}
+
+/* Forum cards row — scrollable on small screens */
+.forum-row {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  gap: clamp(10px, 2.5vw, 22px);
+  flex-wrap: wrap;
+}
+
+.forum-card {
+  width: clamp(110px, 16vw, 155px);
+  min-height: 110px;
+  background: white;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-soft);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 8px;
+  cursor: pointer;
+  transition: transform 0.22s, background 0.2s;
+  flex: 0 0 auto;
+}
+
+.forum-card span {
+  font-size: clamp(1.4rem, 4vw, 1.8rem);
+  margin-bottom: 6px;
+  display: block;
+}
+
+.forum-card p {
+  font-size: clamp(0.68rem, 2vw, 0.82rem);
+  font-weight: 600;
+  text-align: center;
+  color: #333;
+  line-height: 1.3;
+}
+
+.forum-card:hover {
+  transform: translateY(-5px);
+  background: #eef3ff;
+}
+
+.view-all-btn {
+  margin-top: 28px;
+  background: #3267ff;
+  color: white;
+  padding: 11px 30px;
+  border: none;
+  border-radius: 30px;
+  font-size: clamp(0.85rem, 2.5vw, 0.95rem);
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.view-all-btn:hover {
+  transform: scale(1.05);
+  background: #1f49e0;
+}
+
+/* ===========================================================
+   HERO
 =========================================================== */
 .hero {
-  margin-top: 180px;
-  max-width: 1000px;
+  width: 100%;
+  max-width: 860px;
   text-align: center;
-  padding: 60px 30px;
-  background: rgba(255, 255, 255, 0.25);
-  backdrop-filter: blur(14px);
-  border-radius: 25px;
-  box-shadow: 0 10px 40px rgba(255, 100, 180, 0.25);
-  animation: fadeIn 1.2s ease;
+  padding: clamp(30px, 6vw, 55px) clamp(20px, 6%, 40px);
+  margin: clamp(30px, 5vw, 60px) 5%;
+  background: var(--white-glass);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+  animation: fadeIn 1.1s ease both;
+}
+
+.welcome-text {
+  font-size: clamp(1rem, 3vw, 1.2rem);
+  color: #555;
+  margin-bottom: 6px;
 }
 
 .hero-title {
-  font-size: 2.8rem;
+  font-size: clamp(1.7rem, 5vw, 2.6rem);
   font-weight: 800;
-  color: #ff3c83;
-  margin-bottom: 2rem;
+  color: var(--blue-mid);
+  line-height: 1.2;
+  margin-bottom: 12px;
 }
 
 .hero-subtitle {
-  font-size: 1.1rem;
-  color: #444;
-  margin-bottom: 2rem;
+  font-size: clamp(0.9rem, 2.5vw, 1.05rem);
+  color: #555;
+  margin-bottom: 20px;
 }
 
-/* CTA Buttons */
 .cta-buttons {
   display: flex;
-  gap: 1.2rem;
+  gap: clamp(10px, 3vw, 16px);
   justify-content: center;
   flex-wrap: wrap;
-  margin-top: 20px;
 }
 
 .cta-buttons button {
-  background: linear-gradient(135deg, #ff7f50, #ff3c83);
+  background: linear-gradient(135deg, #64b5f6, #3d63f1);
   border: none;
   color: white;
-  padding: 0.8rem 1.8rem;
+  padding: clamp(9px, 2vw, 13px) clamp(18px, 4vw, 26px);
   border-radius: 30px;
-  font-size: 1rem;
+  font-size: clamp(0.82rem, 2.5vw, 1rem);
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 14px rgba(61,99,241,0.25);
 }
 
 .cta-buttons button:hover {
   transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(61,99,241,0.35);
 }
 
-/* Fade animation */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(40px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* ===========================================================
-   FORUM CONTAINER
-=========================================================== */
-.forum-container {
-  position: absolute;
-  top: 200px;
-  left: 50px;
-  width: 330px;
-  padding: 20px;
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.35);
-  backdrop-filter: blur(10px);
-  border: 2px solid rgba(255, 255, 255, 0.4);
-  box-shadow: 0px 10px 25px rgba(255, 100, 180, 0.35);
-}
-
-.forum-title {
-  text-align: center;
-  font-size: 22px;
-  font-weight: bold;
-  color: #ff007f;
-  margin-bottom: 18px;
-  cursor: pointer;
-  transition: 0.3s ease;
-}
-
-.forum-title:hover {
-  color: #ff3c83;
-  transform: scale(1.05);
-}
-
-.forum-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.forum-item {
-  background: linear-gradient(90deg, #ff8ccf, #ff6f6f);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px;
-  border-radius: 14px;
-  font-size: 15px;
-  font-weight: 500;
-  color: white;
-  cursor: pointer;
-  transition: 0.25s;
-}
-
-.forum-item:hover {
-  transform: scale(1.07);
+  from { opacity: 0; transform: translateY(35px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 /* ===========================================================
    ABOUT SECTION
 =========================================================== */
 .about-section {
-  margin-top: 200px;
-  max-width: 900px;
+  width: 90%;
+  max-width: 860px;
+  background: white;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  padding: clamp(30px, 6vw, 55px) clamp(20px, 6%, 50px);
+  margin: clamp(20px, 4vw, 40px) 5%;
   text-align: center;
-  padding: 20px;
-  font-size: 1.1rem;
-  color: #2a2a2a;
+}
+
+.about-section h2 {
+  font-size: clamp(1.3rem, 4vw, 1.8rem);
+  font-weight: 700;
+  color: var(--blue-dark);
+  margin-bottom: 16px;
+}
+
+.about-section p {
+  font-size: clamp(0.85rem, 2.5vw, 1rem);
+  color: #555;
+  line-height: 1.75;
+  margin-bottom: 12px;
 }
 
 /* ===========================================================
-   TICKER
-=========================================================== */
-.city-ticker {
-  width: 100%;
-  margin-top: 40px;
-  overflow: hidden;
-  white-space: nowrap;
-  font-size: 1.5rem;
-  font-weight: 600;
-}
-
-.ticker-track {
-  display: inline-block;
-  padding-left: 50%;
-  animation: tickerMove 18s linear infinite;
-}
-
-@keyframes tickerMove {
-  from { transform: translateX(0); }
-  to { transform: translateX(-100%); }
-}
-
-/* ===========================================================
-   AUTO SCROLLING CITY CARDS
+   CITIES AUTO-SCROLL
 =========================================================== */
 .cities-container {
   width: 100%;
-  margin-top: 80px;
+  margin-top: clamp(40px, 6vw, 80px);
   text-align: center;
+  overflow: hidden;
 }
 
 .cities-title {
-  font-size: 2rem;
+  font-size: clamp(1.3rem, 4vw, 1.9rem);
   font-weight: 700;
-  color: #0b3c8c;
-  margin-bottom: 25px;
+  color: #0d47a1;
+  margin-bottom: 22px;
+  padding: 0 5%;
 }
 
 .cities-scroll-wrapper {
@@ -231,77 +313,275 @@
 
 .cities-scroll {
   display: flex;
-  gap: 15px;
+  gap: clamp(10px, 2vw, 16px);
+  width: max-content;
   animation: scrollCities 30s linear infinite;
+  padding: 10px 0 16px;
+}
+
+.cities-scroll:hover {
+  animation-play-state: paused;
 }
 
 @keyframes scrollCities {
-  0% { transform: translateX(0); }
+  0%   { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
 
 .city-card {
-  min-width: 180px;
-  background: white;
-  border-radius: 15px;
+  min-width: clamp(140px, 20vw, 190px);
+  background: #ffffff;
+  border-radius: var(--radius-md);
   padding: 10px;
   text-align: center;
-  box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+  box-shadow: var(--shadow-soft);
+  flex: 0 0 auto;
+  transition: transform 0.2s;
+}
+
+.city-card:hover {
+  transform: translateY(-4px);
 }
 
 .city-image {
   width: 100%;
-  height: 120px;
-  border-radius: 12px;
+  height: clamp(90px, 12vw, 120px);
+  border-radius: 10px;
   object-fit: cover;
 }
 
 .city-name {
   margin-top: 8px;
-  font-size: 1rem;
+  font-size: clamp(0.8rem, 2vw, 0.95rem);
   font-weight: 600;
+  color: #1a1a2e;
+}
+
+/* ===========================================================
+   CITY TICKER
+=========================================================== */
+.city-ticker {
+  width: 100%;
+  margin-top: clamp(30px, 5vw, 55px);
+  padding: 16px 0;
+  background: #eaf0ff;
+  overflow: hidden;
+}
+
+.ticker-track {
+  white-space: nowrap;
+  display: inline-block;
+  animation: ticker 18s linear infinite;
+  font-size: clamp(0.85rem, 2.5vw, 1rem);
+  font-weight: 600;
+  color: #3a3a5c;
+  padding-left: 100%;
+}
+
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-100%); }
+}
+
+/* ===========================================================
+   WHY CHOOSE US
+=========================================================== */
+.choose-section {
+  width: 90%;
+  max-width: 1100px;
+  text-align: center;
+  margin: clamp(30px, 5vw, 60px) auto;
+  padding: 0 5%;
+}
+
+.choose-section h2 {
+  font-size: clamp(1.3rem, 4vw, 1.8rem);
+  font-weight: 700;
+  color: var(--blue-dark);
+  margin-bottom: 28px;
+}
+
+.choose-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(14px, 2.5vw, 28px);
+}
+
+.choose-card {
+  background: white;
+  padding: clamp(18px, 3vw, 28px);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.22s, box-shadow 0.22s;
+  text-align: left;
+}
+
+.choose-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.11);
+}
+
+.choose-card span {
+  font-size: 1.6rem;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.choose-card h3 {
+  font-size: clamp(0.9rem, 2.2vw, 1rem);
+  font-weight: 700;
+  color: var(--blue-dark);
+  margin-bottom: 6px;
+}
+
+.choose-card p {
+  font-size: clamp(0.75rem, 2vw, 0.875rem);
+  color: #666;
+  line-height: 1.6;
 }
 
 /* ===========================================================
    FOOTER
 =========================================================== */
 .footer {
-  margin-top: 60px;
-  padding-bottom: 30px;
-  color: #333;
-  font-size: 0.95rem;
+  width: 100%;
+  margin-top: clamp(40px, 6vw, 70px);
+  padding: 22px 5%;
+  background: #f0f3ff;
+  color: #555;
+  font-size: clamp(0.78rem, 2vw, 0.9rem);
   font-weight: 500;
+  text-align: center;
 }
 
 /* ===========================================================
    RESPONSIVE BREAKPOINTS
 =========================================================== */
 
-/* Tablets & Mobiles */
-@media (max-width: 900px) {
-  .forum-container {
-    position: static;
-    margin: 20px auto;
-    width: 90%;
-  }
-
-  .hero {
-    margin-top: 120px;
+/* Large tablets */
+@media (max-width: 1024px) {
+  .choose-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media (max-width: 600px) {
+/* Tablets & small laptops */
+@media (max-width: 768px) {
+  .forum-row {
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 10px;
+    gap: 12px;
+  }
+
+  .forum-row::-webkit-scrollbar { display: none; }
+
+  .forum-card {
+    flex: 0 0 auto;
+    width: 120px;
+    scroll-snap-align: start;
+  }
+
+  .choose-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+}
+
+/* Mobile phones */
+@media (max-width: 480px) {
   .navbar {
-    flex-direction: column;
-    gap: 8px;
-    padding: 15px;
+    padding: 12px 4%;
+  }
+
+  .logo {
+    font-size: 1.3rem;
+  }
+
+  .nav-links {
+    gap: 4px;
+  }
+
+  .nav-links button {
+    padding: 5px 7px;
+    font-size: 0.75rem;
+    gap: 3px;
+  }
+
+  .forum-section {
+    padding: 24px 4% 34px;
+    border-radius: 0 0 18px 18px;
+  }
+
+  .forum-card {
+    width: 100px;
+    min-height: 90px;
+    padding: 8px 6px;
+  }
+
+  .hero {
+    margin: 20px 4%;
+    padding: 26px 18px;
+    border-radius: 18px;
   }
 
   .hero-title {
-    font-size: 2rem;
+    font-size: 1.55rem;
+  }
+
+  .cta-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .cta-buttons button {
+    width: 100%;
+    max-width: 260px;
+  }
+
+  .about-section {
+    width: 92%;
+    margin: 14px auto;
+    padding: 24px 18px;
+  }
+
+  .choose-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .choose-card {
+    padding: 16px 14px;
+    text-align: center;
+  }
+
+  .choose-card span { margin-bottom: 6px; }
+
+  .cities-title {
+    font-size: 1.2rem;
+    padding: 0 4%;
   }
 
   .city-card {
     min-width: 130px;
+  }
+}
+
+/* Very small devices */
+@media (max-width: 360px) {
+  .nav-links button span,
+  .nav-links button svg {
+    display: none;
+  }
+
+  .choose-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .forum-card {
+    width: 88px;
   }
 }

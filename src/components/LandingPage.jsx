@@ -1,26 +1,19 @@
 
-
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../style/LandingPage.css";
+
 import {
   FaUserCircle,
   FaUserPlus,
   FaSignInAlt,
   FaSignOutAlt,
   FaInfoCircle,
-  FaTools,
-  FaHotel,
-  FaUsers,
-  FaComments,
-  FaBriefcase,
-  FaCalendarAlt
 } from "react-icons/fa";
 
 export default function LandingPage() {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
-
   const [userName, setUserName] = useState("");
 
   useEffect(() => {
@@ -28,10 +21,8 @@ export default function LandingPage() {
       const name = localStorage.getItem("userName");
       if (name) setUserName(name);
     };
-
     updateName();
     window.addEventListener("profile-updated", updateName);
-
     return () => window.removeEventListener("profile-updated", updateName);
   }, []);
 
@@ -40,58 +31,51 @@ export default function LandingPage() {
     navigate("/login");
   };
 
-  const navigateToForum = (category) => {
-    navigate(`/forum?category=${encodeURIComponent(category)}`);
-  };
-
-  
-
   return (
     <div className="landing-container">
 
-
       {/* ---------------- NAVBAR ---------------- */}
-<nav className="navbar">
-  <div className="logo">CampusOrbit</div>
+      <nav className="navbar">
+        <div className="logo">CampusOrbit</div>
 
-  <div className="nav-links">
-    {/* UPDATED ABOUT BUTTON */}
-    <button
-      onClick={() => {
-        const aboutSection = document.getElementById("about");
-        if (aboutSection) {
-          aboutSection.scrollIntoView({ behavior: "smooth" });
-        }
-      }}
-    >
-      <FaInfoCircle /> About
-    </button>
+        <div className="nav-links">
+          <button
+            onClick={() => {
+              const aboutSection = document.getElementById("about");
+              if (aboutSection) {
+                aboutSection.scrollIntoView({ behavior: "smooth" });
+              }
+            }}
+          >
+            <FaInfoCircle /> About
+          </button>
 
-    {token ? (
-      <>
-        <button onClick={() => navigate("/MyProfile")}>
-          <FaUserCircle /> {userName || "Profile"}
-        </button>
+          {token ? (
+            <>
+              <button onClick={() => navigate("/MyProfile")}>
+                <FaUserCircle /> {userName || "Profile"}
+              </button>
 
-        <button onClick={handleLogout}>
-          <FaSignOutAlt /> Logout
-        </button>
-      </>
-    ) : (
-      <>
-        <button onClick={() => navigate("/register")}>
-          <FaUserPlus /> Register
-        </button>
+              <button onClick={handleLogout}>
+                <FaSignOutAlt /> Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <button onClick={() => navigate("/register")}>
+                <FaUserPlus /> Register
+              </button>
 
-        <button onClick={() => navigate("/login")}>
-          <FaSignInAlt /> Login
-        </button>
-      </>
-    )}
-  </div>
-</nav>
+              <button onClick={() => navigate("/login")}>
+                <FaSignInAlt /> Login
+              </button>
+            </>
+          )}
+        </div>
+      </nav>
 
-      {/* ---------------- HERO ---------------- */}
+
+      {/* ------------ HERO ------------ */}
       <section className="hero">
         {userName && <h2 className="welcome-text">Hey {userName} 👋</h2>}
         <h1 className="hero-title">Find Your Perfect Stay 🎓</h1>
@@ -105,69 +89,75 @@ export default function LandingPage() {
         </div>
       </section>
 
+
       
+      {/* ------------ DISCUSSION FORUM ------------ */}
+      <section className="forum-section">
+        <h2 className="forum-title">Discussion Forums</h2>
+        <p className="forum-subtitle">Connect • Share • Explore</p>
 
-      {/* ---------------- FORUM PANEL ---------------- */}
-      <div className="forum-container">
-        <h2 className="forum-title" onClick={() => navigate("/forum")}>
-          📢 Discussion Forum
-        </h2>
-
-        <div className="forum-list">
-          <div className="forum-item" onClick={() => navigateToForum("Part-Time Jobs")}>
-            <FaBriefcase /> Part-Time Jobs
-          </div>
-          <div className="forum-item" onClick={() => navigateToForum("Cafes & Restaurants")}>
-            <FaHotel /> Cafés & Restaurants
-          </div>
-          <div className="forum-item" onClick={() => navigateToForum("Events & Meetups")}>
-            <FaCalendarAlt /> Events & Meetups
-          </div>
-          <div className="forum-item" onClick={() => navigateToForum("City Services")}>
-            <FaTools /> City Services
-          </div>
-          <div className="forum-item" onClick={() => navigateToForum("Accommodation Tips")}>
-            <FaUsers /> Accommodation Tips
-          </div>
-          <div className="forum-item" onClick={() => navigateToForum("General Discussion")}>
-            <FaComments /> General Chat
-          </div>
-          <div className="forum-item" onClick={() => navigateToForum("Study Group")}>
-            <FaComments /> Study Group
-          </div>
-          <div className="forum-item" onClick={() => navigateToForum("Roommate Finder")}>
-            <FaComments /> Roommate Finder
+        <div className="forum-row">
+          <div className="forum-card" onClick={() => navigate("/forum?category=Part-Time Jobs")}>
+            <span>💼</span>
+            <p>Part-Time Jobs</p>
           </div>
 
-          <div className="forum-item forum-view-all" onClick={() => navigate("/forum")}>
-            📋 View All Posts
+          <div className="forum-card" onClick={() => navigate("/forum?category=Accommodation")}>
+            <span>🏠</span>
+            <p>Accommodation Tips</p>
+          </div>
+
+          <div className="forum-card" onClick={() => navigate("/forum?category=Transportation")}>
+            <span>🚌</span>
+            <p>Transportation</p>
+          </div>
+
+          <div className="forum-card" onClick={() => navigate("/forum?category=City Essentials")}>
+            <span>🛠️</span>
+            <p>City Essentials</p>
+          </div>
+
+          <div className="forum-card" onClick={() => navigate("/forum?category=Events")}>
+            <span>🎉</span>
+            <p>Events & Meetups</p>
+          </div>
+
+          <div className="forum-card" onClick={() => navigate("/forum?category=General Discussion")}>
+            <span>💬</span>
+            <p>General Discussion</p>
           </div>
         </div>
-      </div>
-{/* 
 
+        <button className="view-all-btn" onClick={() => navigate("/forum")}>
+          View All Forums →
+        </button>
+      </section>
 
-{/* ---------------- ABOUT SECTION ---------------- */}
+      {/* ------------ ABOUT ------------ */}
       <section id="about" className="about-section">
         <h2>About CampusOrbit</h2>
         <p>
-          CampusOrbit is a student-first platform designed to help you find accommodation,
-          part-time jobs, emergency contacts, and community support — all in one place.
+          CampusOrbit is built to support students who move to new cities. We help you find
+          verified hostels, flats, part-time jobs, community support, and real emergency
+          contacts — all in one trusted platform.
         </p>
         <p>
-          Our mission is to make student life easier, safer, and smarter by giving you
-          verified resources when moving to a new city.
+          Our vision is to make student life safer, smarter, and more connected.
+          From accommodation to career growth, we bring everything closer to you.
         </p>
       </section>
 
-{/* 🌆 AUTO-SCROLLING CITIES SECTION */}
-<div className="cities-container">
+
+
+
+     {/* 🌆 AUTO-SCROLLING CITIES SECTION */}
+ <div className="cities-container">
   <h2 className="cities-title">Cities We Currently Serveing</h2>
 
   <div className="cities-scroll-wrapper">
     <div className="cities-scroll">
 
-      {[...Array(2)].map((_, idx) => (
+     {[...Array(2)].map((_, idx) => (
         <React.Fragment key={idx}>
 
           
@@ -212,21 +202,47 @@ export default function LandingPage() {
   </div>
 </div>
 
-{/* ---------------- CITY TICKER ---------------- */}
+      {/* ------------ CITY TICKER ------------ */}
       <section className="city-ticker">
         <div className="ticker-track">
-           Linking learners from every corner. We’re bringing your student community closer.
+          Linking learners from every corner. We’re bringing your student community closer.
         </div>
       </section>
 
+      {/* ------------ WHY CHOOSE US ------------ */}
+      <section className="choose-section">
+        <h2>Why Choose Us?</h2>
 
-      
+        <div className="choose-grid">
+          <div className="choose-card">
+            <span>✔️</span>
+            <h3>Verified Listings</h3>
+            <p>Trusted hostels, PGs, jobs & contacts — verified for your safety.</p>
+          </div>
 
-      {/* ---------------- FOOTER ---------------- */}
+          <div className="choose-card">
+            <span>⚡</span>
+            <h3>Fast Search</h3>
+            <p>Find stays, jobs or help instantly with smart filters.</p>
+          </div>
+
+          <div className="choose-card">
+            <span>🛡️</span>
+            <h3>Safety First</h3>
+            <p>Emergency contacts and safe-living guides available anytime.</p>
+          </div>
+
+          <div className="choose-card">
+            <span>🤝</span>
+            <h3>Community Driven</h3>
+            <p>Join discussions and connect with students like you.</p>
+          </div>
+        </div>
+      </section>
+
       <footer className="footer">
         © 2025 CampusOrbit • Designed for Students, By Students 💫
       </footer>
-
     </div>
   );
 }
