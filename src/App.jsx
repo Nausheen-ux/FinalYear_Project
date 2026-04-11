@@ -15,6 +15,8 @@ import HomePage from "./components/HomePage";
 import ForumHome from "./pages/ForumHome";
 import CreatePost from "./pages/CreatePost";
 import PostDetails from "./pages/PostDetails";
+import ExploreCity from "./components/Explorecity";
+import ExploreCategory from "./components/ExploreCategory";
 
 // ✅ Private route for logged-in users
 function PrivateRoute({ children }) {
@@ -110,6 +112,10 @@ export default function App() {
           </PrivateRoute>
         }
       />
+      <Route path="/explore" element={<ExploreCity />} />
+<Route path="/explore/category" element={<ExploreCategory />} />
+
+      
 
       {/* ✅ Fallback - MUST BE LAS*/}
       <Route path="*" element={<Navigate to="/" />} />

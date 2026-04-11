@@ -9,6 +9,7 @@ import {
   FaSignInAlt,
   FaSignOutAlt,
   FaInfoCircle,
+  FaCompass,    
 } from "react-icons/fa";
 
 export default function LandingPage() {
@@ -36,43 +37,54 @@ export default function LandingPage() {
 
       {/* ---------------- NAVBAR ---------------- */}
       <nav className="navbar">
-        <div className="logo">CampusOrbit</div>
+  <div className="logo">CampusOrbit</div>
 
-        <div className="nav-links">
-          <button
-            onClick={() => {
-              const aboutSection = document.getElementById("about");
-              if (aboutSection) {
-                aboutSection.scrollIntoView({ behavior: "smooth" });
-              }
-            }}
-          >
-            <FaInfoCircle /> About
-          </button>
+  <div className="nav-links">
+    <button
+      onClick={() => {
+        const aboutSection = document.getElementById("about");
+        if (aboutSection) {
+          aboutSection.scrollIntoView({ behavior: "smooth" });
+        }
+      }}
+    >
+      <FaInfoCircle /> About
+    </button>
 
-          {token ? (
-            <>
-              <button onClick={() => navigate("/MyProfile")}>
-                <FaUserCircle /> {userName || "Profile"}
-              </button>
+    <button
+      onClick={() => {
+        const exploreSection = document.getElementById("explore");
+        if (exploreSection) {
+          exploreSection.scrollIntoView({ behavior: "smooth" });
+        }
+      }}
+    >
+      <FaCompass /> Explore
+    </button>
 
-              <button onClick={handleLogout}>
-                <FaSignOutAlt /> Logout
-              </button>
-            </>
-          ) : (
-            <>
-              <button onClick={() => navigate("/register")}>
-                <FaUserPlus /> Register
-              </button>
+    {token ? (
+      <>
+        <button onClick={() => navigate("/MyProfile")}>
+          <FaUserCircle /> {userName || "Profile"}
+        </button>
 
-              <button onClick={() => navigate("/login")}>
-                <FaSignInAlt /> Login
-              </button>
-            </>
-          )}
-        </div>
-      </nav>
+        <button onClick={handleLogout}>
+          <FaSignOutAlt /> Logout
+        </button>
+      </>
+    ) : (
+      <>
+        <button onClick={() => navigate("/register")}>
+          <FaUserPlus /> Register
+        </button>
+
+        <button onClick={() => navigate("/login")}>
+          <FaSignInAlt /> Login
+        </button>
+      </>
+    )}
+  </div>
+</nav>
 
 
       {/* ------------ HERO ------------ */}
@@ -149,6 +161,43 @@ export default function LandingPage() {
 
 
 
+      {/* ── EXPLORE HEADER ── */}
+<section id="explore" className="explore-header">
+  <div className="eh-blob1" /><div className="eh-blob2" /><div className="eh-blob3" />
+
+  <div className="eh-inner">
+    <div className="eh-pill">
+      <span className="eh-pill-dot" />
+      New City
+    </div>
+
+    <h2>New Chapter,<br /><em>New Adventure</em></h2>
+
+    <p className="eh-sub">
+      Don't just move to a city — <b>own it.</b><br />
+      From hidden street food alleys and places to the best PGs near campus,<br />
+      explore everything your new home has to offer.
+    </p>
+
+    <div className="eh-stats">
+      <div className="eh-stat"><span className="eh-stat-num">7+</span><span className="eh-stat-lbl">Cities</span></div>
+      <div className="eh-stat-div" />
+      <div className="eh-stat"><span className="eh-stat-num">500+</span><span className="eh-stat-lbl">Listings</span></div>
+      <div className="eh-stat-div" />
+      <div className="eh-stat"><span className="eh-stat-num">10k+</span><span className="eh-stat-lbl">Students</span></div>
+    </div>
+
+    <div className="eh-arrow-row">
+      <div className="eh-arrow-label">Choose your city</div>
+      <div className="eh-chevrons">
+        <div className="eh-chev" /><div className="eh-chev" /><div className="eh-chev" />
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
 
      {/* 🌆 AUTO-SCROLLING CITIES SECTION */}
  <div className="cities-container">
@@ -162,35 +211,35 @@ export default function LandingPage() {
 
           
 
-          <div className="city-card">
+          <div className="city-card" onClick={() => navigate("/explore?city=Delhi")}>
   <img src="/cities/delhi.jpg" className="city-image" alt="Delhi" />
   <p className="city-name">Delhi</p>
 </div>
 
-          <div className="city-card">
+          <div className="city-card" onClick={() => navigate("/explore?city=Kolkata")}>
   <img src="/cities/kolkata.jpg" className="city-image" alt="Kolkata" />
   <p className="city-name">Kolkata</p>
 </div>
 
-          <div className="city-card">
+          <div className="city-card" onClick={() => navigate("/explore?city=Mumbai")}>
   <img src="/cities/mumbai.jpg" className="city-image" alt="Mumbai" />
   <p className="city-name">Mumbai</p>
 </div>
 
-          <div className="city-card">
+          <div className="city-card" onClick={() => navigate("/explore?city=Bangalore")}>
   <img src="/cities/bangalore.jpg" className="city-image" alt="Bangalore" />
   <p className="city-name">Bangalore</p>
 </div>
-         <div className="city-card">
+         <div className="city-card" onClick={() => navigate("/explore?city=Hyderabad")}>
   <img src="/cities/hyderabad.jpg" className="city-image" alt="Hyderabad" />
   <p className="city-name">Hyderabad</p>
 </div>
 
-         <div className="city-card">
+         <div className="city-card" onClick={() => navigate("/explore?city=Pune")}>
   <img src="/cities/pune.jpg" className="city-image" alt="Pune" />
   <p className="city-name">Pune</p>
 </div>
-          <div className="city-card">
+          <div className="city-card" onClick={() => navigate("/explore?city=Chennai")}>
   <img src="/cities/chennai.jpg" className="city-image" alt="Chennai" />
   <p className="city-name">Chennai</p>
 </div>
@@ -208,6 +257,7 @@ export default function LandingPage() {
           Linking learners from every corner. We’re bringing your student community closer.
         </div>
       </section>
+
 
       {/* ------------ WHY CHOOSE US ------------ */}
       <section className="choose-section">

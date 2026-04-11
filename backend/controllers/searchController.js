@@ -5,7 +5,7 @@ import User from "../models/userModel.js";
 // ✅ Search accommodations based on preferences
 export const searchAccommodations = async (req, res) => {
   try {
-    const { rentRange, sharing, location, accommodationType, genderPreference, studentId } = req.query;
+    const { rentRange, sharing, location, locality, accommodationType, genderPreference, college, studentId } = req.query;
 
     // Build query object
     let query = {};
@@ -28,20 +28,7 @@ export const searchAccommodations = async (req, res) => {
       }
     }
 
-    // 2. Filter by sharing/room type
-    if (sharing) {
-      switch (sharing) {
-        case "single":
-          query.roomType = { $in: ["1BHK", "2BHK", "3BHK"] };
-          break;
-        case "double":
-        case "triple":
-          query.roomType = { $in: ["Sharing"] };
-          break;
-      }
-    }
-
-    // 3. Filter by location (search in city and address)
+    // 2. Filter by location (search in city and address)
     if (location) {
       query.$or = [
         { city: { $regex: location, $options: "i" } },
@@ -49,17 +36,48 @@ export const searchAccommodations = async (req, res) => {
       ];
     }
 
-    // 4. Filter by accommodation type (map to propertyType)
+    // 3. Filter by locality
+    if (locality) {
+      query.locality = { $regex: locality, $options: "i" };
+    }
+
+    // 4. Filter by accommodation type (now stored directly as PG / Flat / Hostel)
     if (accommodationType) {
-      switch (accommodationType) {
-        case "PG":
-        case "Hostel":
-          query.propertyType = { $in: ["Apartment", "Independent Floor"] };
+      query.accommodationType = accommodationType;
+    }
+
+    // 5. Filter by sharing type
+    if (sharing) {
+      switch (sharing) {
+        case "single":
+          query.sharing = "Single";
           break;
-        case "Flat":
-          query.propertyType = { $in: ["Apartment", "Independent House", "Independent Floor"] };
+        case "double":
+          query.sharing = "Double Sharing";
+          break;
+        case "triple":
+          query.sharing = "Triple Sharing";
           break;
       }
+    }
+
+    // 6. Filter by gender preference
+    // "Any" → no filter (show everything)
+    // "Male"/"Female" → show exact match OR listings with no gender set (null/missing)
+    if (req.query.genderPreference && req.query.genderPreference !== "Any") {
+      query.$and = query.$and || [];
+      query.$and.push({
+        $or: [
+          { gender: req.query.genderPreference },
+          { gender: null },
+          { gender: { $exists: false } },
+        ],
+      });
+    }
+
+    // 7. Filter by nearby college name
+    if (college) {
+      query["colleges.name"] = { $regex: college, $options: "i" };
     }
 
     // Fetch accommodations with populated owner details

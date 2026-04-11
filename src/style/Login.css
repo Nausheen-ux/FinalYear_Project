@@ -131,7 +131,7 @@
   left: -100px;
   width: 700px;
   height: 220px;
-  background-image: url("C:\Users\SM\Contacts\Desktop\F_Project\FinalYear_Project\public\teddy.jpg");
+  background-image: url("/public/teddy.jpg");
   background-size: contain;
   background-repeat: no-repeat;
   animation: floatBear 10s ease-in-out infinite;

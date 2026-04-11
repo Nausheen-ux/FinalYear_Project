@@ -127,7 +127,9 @@ export const getPostById = async (req, res) => {
 export const updatePost = async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, content, category, city, userId } = req.body;
+    const { title, content, category, city } = req.body;
+    // Use verified user from token
+    const userId = req.user._id.toString();
 
     const post = await Post.findById(id);
 
@@ -171,7 +173,8 @@ export const updatePost = async (req, res) => {
 export const deletePost = async (req, res) => {
   try {
     const { id } = req.params;
-    const { userId } = req.body;
+    // Use verified user from token
+    const userId = req.user._id.toString();
 
     const post = await Post.findById(id);
 
