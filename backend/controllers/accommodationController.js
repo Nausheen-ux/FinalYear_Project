@@ -22,9 +22,12 @@ export const createAccommodation = async (req, res) => {
     const {
       fullName,
       city,
-      propertyType,
+      locality,
+      accommodationType,
       buildingName,
       address,
+      sharing,
+      gender,
       roomType,
       furnishType,
       price,
@@ -37,9 +40,11 @@ export const createAccommodation = async (req, res) => {
     if (
       !fullName ||
       !city ||
-      !propertyType ||
+      !locality ||
+      !accommodationType ||
       !buildingName ||
       !address ||
+      !sharing ||
       !roomType ||
       !furnishType ||
       !price ||
@@ -52,21 +57,24 @@ export const createAccommodation = async (req, res) => {
     // ✅ Handle uploaded images
     let images = [];
     if (req.files && req.files.length > 0) {
-      images = req.files.map((file) => `/uploads/${file.filename}`); // Save relative path
+      images = req.files.map((file) => `/uploads/${file.filename}`);
     }
 
     const newAccommodation = new Accommodation({
       fullName,
       city,
-      propertyType,
+      locality,
+      accommodationType,
       buildingName,
       address,
-      roomType: JSON.parse(roomType), // Because frontend sends as JSON string
+      sharing,
+      gender: gender || null,
+      roomType: JSON.parse(roomType),
       furnishType,
       price,
       mobile,
       email,
-      colleges: JSON.parse(colleges), // Because frontend sends as JSON string
+      colleges: JSON.parse(colleges),
       images,
       ownerId,
     });

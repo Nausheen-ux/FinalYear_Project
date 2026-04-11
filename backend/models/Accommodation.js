@@ -16,10 +16,15 @@ const accommodationSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    propertyType: {
+    locality: {
       type: String,
       required: true,
-      enum: ["Apartment", "Independent House", "Independent Floor"],
+      trim: true,
+    },
+    accommodationType: {
+      type: String,
+      required: true,
+      enum: ["PG", "Flat", "Hostel"],
     },
     buildingName: {
       type: String,
@@ -28,6 +33,16 @@ const accommodationSchema = new mongoose.Schema(
     address: {
       type: String,
       required: true,
+    },
+    sharing: {
+      type: String,
+      required: true,
+      enum: ["Single", "Double Sharing", "Triple Sharing"],
+    },
+    gender: {
+      type: String,
+      enum: ["Male", "Female"],
+      default: null,
     },
     roomType: {
       type: [String],

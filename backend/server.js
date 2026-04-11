@@ -11,6 +11,8 @@ import accommodationRoutes from "./routes/accommodationRoutes.js";
 import searchRoutes from "./routes/searchRoutes.js";
 import connectionRequestRoutes from "./routes/connectionRequestRoutes.js";
 import forumRoutes from "./routes/forumRoutes.js";
+import searchHistoryRoutes from "./routes/searchHistoryRoutes.js";
+
 
 dotenv.config();
 connectDB();
@@ -35,6 +37,7 @@ app.use("/api/search", searchRoutes);
 app.use("/api/connection-requests", connectionRequestRoutes);
 app.use("/api/connections", connectionRequestRoutes);
 app.use("/api/forum", forumRoutes); // ✅ Forum routes added here
+app.use("/api/search-history", searchHistoryRoutes);
 
 // Server start
 const PORT = process.env.PORT || 5000;
