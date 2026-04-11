@@ -94,7 +94,7 @@ export default function LandingPage() {
       {/* ------------ DISCUSSION FORUM ------------ */}
       <section className="forum-section">
         <h2 className="forum-title">Discussion Forums</h2>
-        <p className="forum-subtitle">Connect • Share • Explore</p>
+        <p className="forum-subtitle">Connect • Share • xplore</p>
 
         <div className="forum-row">
           <div className="forum-card" onClick={() => navigate("/forum?category=Part-Time Jobs")}>
