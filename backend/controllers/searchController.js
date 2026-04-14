@@ -82,7 +82,7 @@ export const searchAccommodations = async (req, res) => {
 
     // Fetch accommodations with populated owner details
     const accommodations = await Accommodation.find(query)
-      .populate("ownerId", "_id name email phone")
+      .populate("owner", "_id name email phone")
       .sort({ createdAt: -1 })
       .lean();
 

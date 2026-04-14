@@ -14,6 +14,8 @@ import HomePage from "./components/HomePage";
 import ForumHome from "./pages/ForumHome";
 import CreatePost from "./pages/CreatePost";
 import PostDetails from "./pages/PostDetails";
+import ExploreCity from "./components/Explorecity";
+import ExploreCategory from "./components/ExploreCategory";
 
 import AdminRoute from "./components/AdminRoute";
 import AdminLogin from "./pages/AdminLogin";
@@ -48,16 +50,83 @@ export default function App() {
       <Route path="/forum/create" element={<CreatePost />} />
       <Route path="/forum/posts/:id" element={<PostDetails />} />
 
-      {/* Protected routes */}
-      <Route path="/MyProfile" element={<PrivateRoute><MyProfile /></PrivateRoute>} />
-      <Route path="/post-accommodation" element={<PrivateRoute><PostAccommodation /></PrivateRoute>} />
-      <Route path="/posted-properties" element={<PrivateRoute><PostedProperties /></PrivateRoute>} />
-      <Route path="/owner-dashboard" element={<PrivateRoute><PostAccommodation /></PrivateRoute>} />
-      <Route path="/rent" element={<PrivateRoute><RentPage /></PrivateRoute>} />
-      <Route path="/rent-results" element={<PrivateRoute><RentResult /></PrivateRoute>} />
-      <Route path="/ParttimeJob" element={<PrivateRoute><ParttimeJob /></PrivateRoute>} />
-      <Route path="/job-results" element={<PrivateRoute><JobResults /></PrivateRoute>} />
-      <Route path="/EmergencyContacts" element={<PrivateRoute><EmergencyContacts /></PrivateRoute>} />
+      {/* ✅ Protected routes (only after login) */}
+      <Route
+        path="/MyProfile"
+        element={
+          <PrivateRoute>
+            <MyProfile />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/post-accommodation"
+        element={
+          <PrivateRoute>
+            <PostAccommodation />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/posted-properties"
+        element={
+          <PrivateRoute>
+            <PostedProperties />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/owner-dashboard"
+        element={
+          <PrivateRoute>
+            <PostAccommodation />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/rent"
+        element={
+          <PrivateRoute>
+            <RentPage />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/rent-results"
+        element={
+          <PrivateRoute>
+            <RentResult />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/ParttimeJob"
+        element={
+          <PrivateRoute>
+            <ParttimeJob />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/job-results"
+        element={
+          <PrivateRoute>
+            <JobResults />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/EmergencyContacts"
+        element={
+          <PrivateRoute>
+            <EmergencyContacts />
+          </PrivateRoute>
+        }
+      />
+      <Route path="/explore" element={<ExploreCity />} />
+<Route path="/explore/category" element={<ExploreCategory />} />
+
+      
 
       {/* Fallback */}
       <Route path="*" element={<Navigate to="/" />} />
