@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import PropertyCard from "./PropertyCard";
 import "../style/RentResult.css";
+import RecommendedSection from "./RecommendedSection";
 
 export default function RentResult() {
   const nav = useNavigate();
@@ -29,10 +30,10 @@ export default function RentResult() {
       const preferences = JSON.parse(prefs);
       setSearchPrefs(preferences);
 
-      // ✅ FIX: Get studentId from localStorage
-      const studentId = localStorage.getItem("userId") || 
-                        localStorage.getItem("studentId") || 
-                        localStorage.getItem("id");
+      const studentId =
+        localStorage.getItem("userId") ||
+        localStorage.getItem("studentId") ||
+        localStorage.getItem("id");
 
       const params = new URLSearchParams();
       if (preferences.rentRange) params.append("rentRange", preferences.rentRange);
@@ -42,14 +43,12 @@ export default function RentResult() {
         params.append("accommodationType", preferences.accommodationType);
       if (preferences.genderPreference)
         params.append("genderPreference", preferences.genderPreference);
-      
-      // ✅ FIX: Pass studentId to get connection status
       if (studentId) params.append("studentId", studentId);
 
       const response = await axios.get(
         `http://localhost:5000/api/search?${params.toString()}`
       );
-      
+
       if (response.data.success) {
         setProperties(response.data.data);
       } else {
@@ -63,13 +62,11 @@ export default function RentResult() {
     }
   };
 
-  // New search
   const handleNewSearch = () => {
     localStorage.removeItem("rentPreferences");
     nav("/rent");
   };
 
-  // UI states
   if (loading) {
     return (
       <div className="centered min-60vh">
@@ -142,6 +139,9 @@ export default function RentResult() {
         </div>
       )}
 
+      {/* ✅ AI Recommendations — placed above search results */}
+      <RecommendedSection onRefresh={fetchResults} />
+
       {/* Results */}
       <div className="results-container">
         {properties.length === 0 ? (
@@ -159,7 +159,7 @@ export default function RentResult() {
               <PropertyCard
                 key={property._id}
                 property={property}
-                onRefresh={fetchResults} // ✅ Pass refresh function to reload after connection status changes
+                onRefresh={fetchResults}
               />
             ))}
           </div>

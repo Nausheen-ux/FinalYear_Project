@@ -4,7 +4,7 @@ import cors from "cors";
 import connectDB from "./config/db.js";
 import path from "path";
 import { fileURLToPath } from "url";
-
+import recommendationRoutes from "./routes/recommendationRoutes.js";
 // Import routes
 import userRoutes from "./routes/userRoutes.js";
 import accommodationRoutes from "./routes/accommodationRoutes.js";
@@ -38,6 +38,7 @@ app.use("/api/connection-requests", connectionRequestRoutes);
 app.use("/api/connections", connectionRequestRoutes);
 app.use("/api/forum", forumRoutes); // ✅ Forum routes added here
 app.use("/api/search-history", searchHistoryRoutes);
+app.use("/api/recommendations", recommendationRoutes);
 
 // Server start
 const PORT = process.env.PORT || 5000;
