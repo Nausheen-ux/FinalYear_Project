@@ -1,0 +1,44 @@
+@import "./AdminLayout.css";
+
+.stats-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 22px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 4px 20px rgba(59,111,212,0.08);
+  transition: all 0.25s ease;
+  border-left: 4px solid transparent;
+}
+
+.stats-card.clickable { cursor: pointer; }
+.stats-card.clickable:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 32px rgba(59,111,212,0.15);
+}
+
+.stats-card--blue   { border-left-color: #3b6fd4; }
+.stats-card--amber  { border-left-color: #f39c12; }
+.stats-card--green  { border-left-color: #2ecc71; }
+.stats-card--red    { border-left-color: #e74c3c; }
+.stats-card--purple { border-left-color: #7c6fcf; }
+
+.stats-icon { font-size: 1.8rem; min-width: 44px; text-align: center; }
+
+.stats-value {
+  font-size: 1.7rem;
+  font-weight: 800;
+  color: #1a2340;
+  margin: 0;
+  line-height: 1;
+}
+
+.stats-label {
+  font-size: 0.72rem;
+  color: #6b7a99;
+  margin: 4px 0 0;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}

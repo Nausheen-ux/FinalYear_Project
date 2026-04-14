@@ -1,0 +1,128 @@
+@import "./AdminLayout.css";
+
+.review-card {
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 4px 20px rgba(59,111,212,0.08);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.25s ease;
+}
+
+.review-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 32px rgba(59,111,212,0.15);
+}
+
+.review-card__image {
+  position: relative;
+  height: 160px;
+  background: #e8f0fc;
+}
+
+.review-card__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  background: #e8f0fc;
+}
+
+.status-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-pending  { background: #fef8e8; color: #b7770a; }
+.status-approved { background: #e9faf2; color: #1a9153; }
+.status-rejected { background: #fdf0ee; color: #e74c3c; }
+
+.review-card__body { padding: 16px; flex: 1; }
+
+.review-card__title {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: #1a2340;
+  margin: 0 0 10px;
+}
+
+.review-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+  font-size: 0.78rem;
+  color: #6b7a99;
+}
+
+.review-card__owner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  padding: 8px 10px;
+  background: #f0f4ff;
+  border-radius: 8px;
+}
+
+.owner-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #3b6fd4;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.78rem;
+  flex-shrink: 0;
+}
+
+.owner-name  { font-size: 0.83rem; font-weight: 700; color: #1a2340; margin: 0; }
+.owner-email { font-size: 0.72rem; color: #6b7a99; margin: 0; }
+
+.review-card__date { font-size: 0.72rem; color: #6b7a99; }
+
+.review-card__actions {
+  padding: 12px 16px;
+  border-top: 1px solid #d8e4f8;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.btn-view, .btn-approve, .btn-reject {
+  padding: 7px 14px;
+  border-radius: 8px;
+  border: none;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: "Nunito", "Segoe UI", sans-serif;
+}
+
+.btn-view    { background: #e8f0fc; color: #2a56b0; }
+.btn-approve { background: #e9faf2; color: #1a9153; }
+.btn-reject  { background: #fdf0ee; color: #e74c3c; }
+
+.btn-view:hover    { background: #3b6fd4; color: white; }
+.btn-approve:hover { background: #2ecc71; color: white; }
+.btn-reject:hover  { background: #e74c3c; color: white; }

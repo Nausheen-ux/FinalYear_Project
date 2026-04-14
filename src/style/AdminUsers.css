@@ -1,0 +1,92 @@
+@import "./AdminLayout.css";
+
+.users-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.search-input {
+  flex: 1;
+  max-width: 400px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: 2px solid #d8e4f8;
+  font-size: 0.9rem;
+  font-family: "Nunito", "Segoe UI", sans-serif;
+  outline: none;
+  transition: border-color 0.2s;
+  background: #ffffff;
+  color: #1a2340;
+}
+
+.search-input:focus { border-color: #3b6fd4; }
+
+.user-count {
+  font-size: 0.85rem;
+  color: #6b7a99;
+  font-weight: 600;
+}
+
+.users-table-wrap {
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 4px 20px rgba(59,111,212,0.08);
+  overflow: hidden;
+}
+
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.users-table th {
+  background: #e8f0fc;
+  color: #2a56b0;
+  font-weight: 700;
+  padding: 14px 20px;
+  text-align: left;
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.users-table td {
+  padding: 13px 20px;
+  border-bottom: 1px solid #d8e4f8;
+  color: #1a2340;
+}
+
+.users-table tr:last-child td { border-bottom: none; }
+.users-table tr:hover td { background: #f0f4ff; }
+
+.user-cell { display: flex; align-items: center; gap: 10px; }
+
+.user-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #3b6fd4;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.82rem;
+  flex-shrink: 0;
+}
+
+.role-badge {
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 0.73rem;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.role-student { background: #e8f0fc; color: #2a56b0; }
+.role-owner   { background: #fef8e8; color: #b7770a; }
+.role-admin   { background: #fdf0ee; color: #e74c3c; }

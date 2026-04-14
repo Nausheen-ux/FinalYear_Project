@@ -1,0 +1,91 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --co-blue: #3b6fd4;
+  --co-blue-dark: #2a56b0;
+  --co-blue-light: #e8f0fc;
+  --co-purple: #7c6fcf;
+  --co-green: #2ecc71;
+  --co-green-light: #e9faf2;
+  --co-amber: #f39c12;
+  --co-amber-light: #fef8e8;
+  --co-red: #e74c3c;
+  --co-red-light: #fdf0ee;
+  --co-white: #ffffff;
+  --co-bg: #f0f4ff;
+  --co-sidebar-bg: #1e2a4a;
+  --co-sidebar-text: #a8b8d8;
+  --co-text: #1a2340;
+  --co-text-muted: #6b7a99;
+  --co-border: #d8e4f8;
+  --co-shadow: 0 4px 20px rgba(59,111,212,0.1);
+  --co-shadow-hover: 0 8px 32px rgba(59,111,212,0.18);
+  --radius: 14px;
+  --radius-sm: 8px;
+  --sidebar-width: 240px;
+}
+
+body {
+  font-family: "Nunito", "Segoe UI", sans-serif;
+  background: var(--co-bg);
+  color: var(--co-text);
+}
+
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.admin-main {
+  margin-left: var(--sidebar-width);
+  flex: 1;
+  padding: 36px 40px;
+  min-height: 100vh;
+  background: var(--co-bg);
+}
+
+.admin-header { margin-bottom: 32px; }
+
+.admin-title {
+  font-size: 1.9rem;
+  font-weight: 800;
+  color: var(--co-text);
+  margin: 0 0 4px;
+}
+
+.admin-subtitle {
+  color: var(--co-text-muted);
+  font-size: 0.95rem;
+}
+
+.admin-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 80px 0;
+  color: var(--co-text-muted);
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #c8d4f5;
+  border-top-color: var(--co-blue);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 80px 0;
+  color: var(--co-text-muted);
+}
+
+.empty-icon { font-size: 3rem; }
+.section-title { font-size: 1.15rem; font-weight: 700; color: var(--co-text); margin: 0 0 16px; }

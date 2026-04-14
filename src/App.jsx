@@ -1,4 +1,3 @@
-
 import { Routes, Route, Navigate } from "react-router-dom";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
@@ -18,6 +17,12 @@ import PostDetails from "./pages/PostDetails";
 import ExploreCity from "./components/Explorecity";
 import ExploreCategory from "./components/ExploreCategory";
 
+import AdminRoute from "./components/AdminRoute";
+import AdminLogin from "./pages/AdminLogin";
+import AdminDashboard from "./pages/AdminDashboard";
+import AdminProperties from "./pages/AdminProperties";
+import AdminUsers from "./pages/AdminUsers";
+
 // ✅ Private route for logged-in users
 function PrivateRoute({ children }) {
   const token = localStorage.getItem("token");
@@ -27,14 +32,20 @@ function PrivateRoute({ children }) {
 export default function App() {
   return (
     <Routes>
-      {/* ✅ Default route opens LandingPage first */}
+      {/* Default route */}
       <Route path="/" element={<LandingPage />} />
 
       {/* Auth routes */}
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
 
-      {/* ✅ FORUM ROUTES - MUST BE BEFORE THE FALLBACK */}
+      {/* ── Admin routes ── */}
+      <Route path="/admin/login" element={<AdminLogin />} />
+      <Route path="/admin/dashboard" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
+      <Route path="/admin/properties" element={<AdminRoute><AdminProperties /></AdminRoute>} />
+      <Route path="/admin/users" element={<AdminRoute><AdminUsers /></AdminRoute>} />
+
+      {/* Forum routes */}
       <Route path="/forum" element={<ForumHome />} />
       <Route path="/forum/create" element={<CreatePost />} />
       <Route path="/forum/posts/:id" element={<PostDetails />} />
@@ -117,7 +128,7 @@ export default function App() {
 
       
 
-      {/* ✅ Fallback - MUST BE LAS*/}
+      {/* Fallback */}
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   );
