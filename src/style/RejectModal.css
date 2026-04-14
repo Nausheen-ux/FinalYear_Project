@@ -1,0 +1,90 @@
+@import "./AdminLayout.css";
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(30,42,74,0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  backdrop-filter: blur(3px);
+  padding: 20px;
+}
+
+.modal-box {
+  background: white;
+  border-radius: 16px;
+  padding: 32px;
+  width: 100%;
+  max-width: 460px;
+  box-shadow: 0 24px 60px rgba(30,42,74,0.2);
+}
+
+.modal-title {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #1a2340;
+  margin: 0 0 6px;
+}
+
+.modal-subtitle {
+  font-size: 0.88rem;
+  color: #6b7a99;
+  margin: 0 0 20px;
+  line-height: 1.5;
+}
+
+.reason-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+
+.reason-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 2px solid #d8e4f8;
+  cursor: pointer;
+  font-size: 0.86rem;
+  color: #1a2340;
+  transition: all 0.15s;
+  font-family: "Nunito", "Segoe UI", sans-serif;
+}
+
+.reason-option input[type="radio"] { accent-color: #3b6fd4; flex-shrink: 0; }
+.reason-option:hover { border-color: #3b6fd4; background: #f0f4ff; }
+.reason-option.selected { border-color: #3b6fd4; background: #e8f0fc; color: #2a56b0; font-weight: 700; }
+
+.custom-reason {
+  width: 100%;
+  padding: 10px 14px;
+  border: 2px solid #d8e4f8;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-family: "Nunito", "Segoe UI", sans-serif;
+  resize: vertical;
+  outline: none;
+  margin-bottom: 16px;
+  color: #1a2340;
+}
+
+.custom-reason:focus { border-color: #3b6fd4; }
+
+.modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
+
+.modal-cancel, .modal-confirm {
+  padding: 10px 22px;
+  border-radius: 8px;
+  border: none;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: "Nunito", "Segoe UI", sans-serif;
+}
+
+.modal-cancel  { background: #f0f4ff; color: #6b7a99; }
+.modal-cancel:hover { background: #d8e4f8; }
+.modal-confirm { background: #e74c3c; color: white; }
+.modal-confirm:hover:not(:disabled) { background: #c0392b; }
+.modal-confirm:disabled { opacity: 0.5; cursor: not-allowed; }

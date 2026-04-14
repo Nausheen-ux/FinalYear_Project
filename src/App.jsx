@@ -1,4 +1,3 @@
-
 import { Routes, Route, Navigate } from "react-router-dom";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
@@ -16,6 +15,12 @@ import ForumHome from "./pages/ForumHome";
 import CreatePost from "./pages/CreatePost";
 import PostDetails from "./pages/PostDetails";
 
+import AdminRoute from "./components/AdminRoute";
+import AdminLogin from "./pages/AdminLogin";
+import AdminDashboard from "./pages/AdminDashboard";
+import AdminProperties from "./pages/AdminProperties";
+import AdminUsers from "./pages/AdminUsers";
+
 // ✅ Private route for logged-in users
 function PrivateRoute({ children }) {
   const token = localStorage.getItem("token");
@@ -25,93 +30,36 @@ function PrivateRoute({ children }) {
 export default function App() {
   return (
     <Routes>
-      {/* ✅ Default route opens LandingPage first */}
+      {/* Default route */}
       <Route path="/" element={<LandingPage />} />
 
       {/* Auth routes */}
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
 
-      {/* ✅ FORUM ROUTES - MUST BE BEFORE THE FALLBACK */}
+      {/* ── Admin routes ── */}
+      <Route path="/admin/login" element={<AdminLogin />} />
+      <Route path="/admin/dashboard" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
+      <Route path="/admin/properties" element={<AdminRoute><AdminProperties /></AdminRoute>} />
+      <Route path="/admin/users" element={<AdminRoute><AdminUsers /></AdminRoute>} />
+
+      {/* Forum routes */}
       <Route path="/forum" element={<ForumHome />} />
       <Route path="/forum/create" element={<CreatePost />} />
       <Route path="/forum/posts/:id" element={<PostDetails />} />
 
-      {/* ✅ Protected routes (only after login) */}
-      <Route
-        path="/MyProfile"
-        element={
-          <PrivateRoute>
-            <MyProfile />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/post-accommodation"
-        element={
-          <PrivateRoute>
-            <PostAccommodation />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/posted-properties"
-        element={
-          <PrivateRoute>
-            <PostedProperties />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/owner-dashboard"
-        element={
-          <PrivateRoute>
-            <PostAccommodation />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/rent"
-        element={
-          <PrivateRoute>
-            <RentPage />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/rent-results"
-        element={
-          <PrivateRoute>
-            <RentResult />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/ParttimeJob"
-        element={
-          <PrivateRoute>
-            <ParttimeJob />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/job-results"
-        element={
-          <PrivateRoute>
-            <JobResults />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/EmergencyContacts"
-        element={
-          <PrivateRoute>
-            <EmergencyContacts />
-          </PrivateRoute>
-        }
-      />
+      {/* Protected routes */}
+      <Route path="/MyProfile" element={<PrivateRoute><MyProfile /></PrivateRoute>} />
+      <Route path="/post-accommodation" element={<PrivateRoute><PostAccommodation /></PrivateRoute>} />
+      <Route path="/posted-properties" element={<PrivateRoute><PostedProperties /></PrivateRoute>} />
+      <Route path="/owner-dashboard" element={<PrivateRoute><PostAccommodation /></PrivateRoute>} />
+      <Route path="/rent" element={<PrivateRoute><RentPage /></PrivateRoute>} />
+      <Route path="/rent-results" element={<PrivateRoute><RentResult /></PrivateRoute>} />
+      <Route path="/ParttimeJob" element={<PrivateRoute><ParttimeJob /></PrivateRoute>} />
+      <Route path="/job-results" element={<PrivateRoute><JobResults /></PrivateRoute>} />
+      <Route path="/EmergencyContacts" element={<PrivateRoute><EmergencyContacts /></PrivateRoute>} />
 
-      {/* ✅ Fallback - MUST BE LAS*/}
+      {/* Fallback */}
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   );

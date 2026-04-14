@@ -5,7 +5,7 @@ import path from "path";
 // ✅ Configure Multer storage
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "uploads/"); // Folder where images will be saved
+    cb(null, "uploads/");
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
@@ -54,7 +54,6 @@ export const createAccommodation = async (req, res) => {
       return res.status(400).json({ message: "All required fields must be filled" });
     }
 
-    // ✅ Handle uploaded images
     let images = [];
     if (req.files && req.files.length > 0) {
       images = req.files.map((file) => `/uploads/${file.filename}`);
@@ -77,6 +76,7 @@ export const createAccommodation = async (req, res) => {
       colleges: JSON.parse(colleges),
       images,
       ownerId,
+      status: "pending",   // ← every new listing awaits admin approval
     });
 
     const savedAccommodation = await newAccommodation.save();
@@ -91,17 +91,17 @@ export const createAccommodation = async (req, res) => {
   }
 };
 
-// ✅ Get all posted accommodations
+// ✅ Get all APPROVED accommodations (public — students see only these)
 export const getAllAccommodations = async (req, res) => {
   try {
-    const accommodations = await Accommodation.find().sort({ createdAt: -1 });
+    const accommodations = await Accommodation.find({ status: "approved" }).sort({ createdAt: -1 });
     res.status(200).json(accommodations);
   } catch (error) {
     res.status(500).json({ message: "Error fetching accommodations", error: error.message });
   }
 };
 
-// ✅ Get accommodations of a specific owner
+// ✅ Get accommodations of a specific owner (all statuses so owner sees their own pending ones)
 export const getOwnerAccommodations = async (req, res) => {
   try {
     const { ownerId } = req.params;
