@@ -8,7 +8,7 @@ export const searchAccommodations = async (req, res) => {
     const { rentRange, sharing, location, locality, accommodationType, genderPreference, college, studentId } = req.query;
 
     // Build query object
-    let query = {};
+    let query = { status: "approved" };
 
     // 1. Filter by rent range
     if (rentRange) {
@@ -82,7 +82,7 @@ export const searchAccommodations = async (req, res) => {
 
     // Fetch accommodations with populated owner details
     const accommodations = await Accommodation.find(query)
-      .populate("owner", "_id name email phone")
+      .populate("ownerId", "_id name email phone")
       .sort({ createdAt: -1 })
       .lean();
 
@@ -107,10 +107,10 @@ export const searchAccommodations = async (req, res) => {
         address: null,
       };
 
-      // ✅ FIX: Reveal ONLY if approved (not when just "sent")
+      // ✅ Reveal ONLY if approved (not when just "sent")
       if (connectionStatus === "approved") {
-        ownerInfo.email = acc.email || acc.ownerId?.email || "Not Provided"; // Use accommodation email
-        ownerInfo.phone = acc.mobile || "Not Provided"; // ✅ Use mobile from accommodation
+        ownerInfo.email = acc.email || acc.ownerId?.email || "Not Provided";
+        ownerInfo.phone = acc.mobile || "Not Provided";
         ownerInfo.address = acc.address || "Not Provided";
       }
 

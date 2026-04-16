@@ -32,6 +32,10 @@ import {
   approveProperty,
   rejectProperty,
   getAllUsers,
+  getAllForumPosts,
+  getForumPostWithComments,
+  deleteAbusivePost,
+  deleteAbusiveComment,
 } from "../controllers/adminController.js";
 import { protect, isAdmin } from "../middleware/adminMiddleware.js";
 
@@ -46,5 +50,11 @@ router.get("/properties/:id", getPropertyById);
 router.patch("/properties/:id/approve", approveProperty);
 router.patch("/properties/:id/reject", rejectProperty);
 router.get("/users", getAllUsers);
+
+// ==================== FORUM MANAGEMENT ROUTES ====================
+router.get("/forum/posts", getAllForumPosts);
+router.get("/forum/posts/:id", getForumPostWithComments);
+router.delete("/forum/posts/:id", deleteAbusivePost);
+router.delete("/forum/comments/:id", deleteAbusiveComment);
 
 export default router;

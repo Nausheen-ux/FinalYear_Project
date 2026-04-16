@@ -22,6 +22,7 @@ import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminProperties from "./pages/AdminProperties";
 import AdminUsers from "./pages/AdminUsers";
+import AdminForum from "./pages/AdminForum";
 
 // ✅ Private route for logged-in users
 function PrivateRoute({ children }) {
@@ -44,6 +45,7 @@ export default function App() {
       <Route path="/admin/dashboard" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
       <Route path="/admin/properties" element={<AdminRoute><AdminProperties /></AdminRoute>} />
       <Route path="/admin/users" element={<AdminRoute><AdminUsers /></AdminRoute>} />
+      <Route path="/admin/forum" element={<AdminRoute><AdminForum /></AdminRoute>} />
 
       {/* Forum routes */}
       <Route path="/forum" element={<ForumHome />} />

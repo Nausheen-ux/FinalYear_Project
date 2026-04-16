@@ -6,7 +6,8 @@ import {
   updatePost,
   deletePost,
   getUserPosts,
-  toggleLike
+  toggleLike,
+  upload
 } from "../controllers/postController.js";
 
 import {
@@ -20,7 +21,7 @@ import { protect } from "../middleware/authMiddleware.js";
 const router = express.Router();
 
 // ==================== POST ROUTES ====================
-router.post("/posts", protect, createPost);
+router.post("/posts", protect, upload.array("images", 5), createPost);
 router.get("/posts", getAllPosts);
 router.get("/posts/:id", getPostById);
 router.put("/posts/:id", protect, updatePost);

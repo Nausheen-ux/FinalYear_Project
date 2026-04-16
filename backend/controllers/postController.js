@@ -1,4 +1,20 @@
 import Post from "../models/Post.js";
+import multer from "multer";
+import path from "path";
+
+// ✅ Configure Multer storage for forum posts
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/");
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    cb(null, uniqueSuffix + path.extname(file.originalname));
+  },
+});
+
+// ✅ Multer upload instance for forum posts
+export const upload = multer({ storage: storage });
 
 // ======================= CREATE POST =======================
 export const createPost = async (req, res) => {
@@ -14,6 +30,12 @@ export const createPost = async (req, res) => {
       });
     }
 
+    // Handle uploaded images
+    let images = [];
+    if (req.files && req.files.length > 0) {
+      images = req.files.map((file) => `/uploads/${file.filename}`);
+    }
+
     const newPost = new Post({
       title,
       content,
@@ -21,7 +43,7 @@ export const createPost = async (req, res) => {
       city,
       authorId,
       authorName,
-      images: req.body.images || []
+      images: images
     });
 
     await newPost.save();

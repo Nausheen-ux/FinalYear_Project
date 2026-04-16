@@ -31,7 +31,7 @@ export default function RecommendedSection({ onRefresh }) {
 
   return (
     <div className="recommendations-section">
-      <div className="rent-result-header">
+      <div className="recommendations-header">
         <div className="header-content">
           <div>
             <h3 className="header-title">✨ Recommended for You</h3>
@@ -39,7 +39,7 @@ export default function RecommendedSection({ onRefresh }) {
           </div>
         </div>
       </div>
-      <div className="property-grid">
+      <div className="property-grid recommendations-grid">
         {recommendations.map((property) => (
           <PropertyCard
             key={property._id}

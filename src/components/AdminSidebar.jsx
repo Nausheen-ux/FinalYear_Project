@@ -9,6 +9,7 @@ const navItems = [
   { to: "/admin/properties?status=approved", icon: "✅", label: "Approved" },
   { to: "/admin/properties?status=rejected", icon: "❌", label: "Rejected" },
   { to: "/admin/users",                  icon: "👥", label: "Users" },
+  { to: "/admin/forum",                  icon: "💬", label: "Forum" },
 ];
 
 const AdminSidebar = () => {

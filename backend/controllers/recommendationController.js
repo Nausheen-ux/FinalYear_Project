@@ -19,7 +19,7 @@ export const getRecommendations = async (req, res) => {
     }
 
     // Fetch all properties
-    const properties = await Accommodation.find({}).lean();
+    const properties = await Accommodation.find({ status: "approved" }).lean();
 
     if (!properties.length) {
       return res.status(200).json({ success: true, data: [] });

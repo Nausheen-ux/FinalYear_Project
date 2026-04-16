@@ -51,6 +51,42 @@ export default function PostCard({ post, onRefresh }) {
           {post.category}
         </span>
 
+        {/* Images */}
+        {post.images && post.images.length > 0 && (
+          <div className="mb-3">
+            <div className="d-flex gap-2 overflow-auto" style={{ maxHeight: '120px' }}>
+              {post.images.slice(0, 3).map((image, index) => (
+                <img
+                  key={index}
+                  src={`http://localhost:5000${image}`}
+                  alt={`Post image ${index + 1}`}
+                  className="rounded"
+                  style={{
+                    width: post.images.length === 1 ? '100%' : '80px',
+                    height: '80px',
+                    objectFit: 'cover',
+                    flexShrink: 0
+                  }}
+                />
+              ))}
+              {post.images.length > 3 && (
+                <div
+                  className="rounded d-flex align-items-center justify-content-center bg-light text-muted"
+                  style={{
+                    width: '80px',
+                    height: '80px',
+                    flexShrink: 0,
+                    fontSize: '0.8rem',
+                    fontWeight: 'bold'
+                  }}
+                >
+                  +{post.images.length - 3}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
         {/* Title */}
         <h5 className="card-title mb-2">{post.title}</h5>
 

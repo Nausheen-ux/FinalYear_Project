@@ -94,7 +94,7 @@ export default function RentResult() {
   return (
     <div className="rent-result-page">
       {/* Header */}
-      <div className="rent-result-header">
+      <div className="search-results-header">
         <div className="header-content">
           <div>
             <h3 className="header-title">🔍 Search Results</h3>
@@ -106,7 +106,7 @@ export default function RentResult() {
               )}
             </p>
           </div>
-          <button className="btn-outline" onClick={handleNewSearch}>
+          <button className="btn-outline-light" onClick={handleNewSearch}>
             ⚙️ New Search
           </button>
         </div>
@@ -141,6 +141,13 @@ export default function RentResult() {
 
       {/* ✅ AI Recommendations — placed above search results */}
       <RecommendedSection onRefresh={fetchResults} />
+
+      {/* Divider */}
+      <div className="section-divider">
+        <hr />
+        <span className="divider-text">All Properties</span>
+        <hr />
+      </div>
 
       {/* Results */}
       <div className="results-container">

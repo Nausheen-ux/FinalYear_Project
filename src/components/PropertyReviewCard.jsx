@@ -2,13 +2,13 @@ import React from "react";
 import "../style/PropertyReviewCard.css";
 
 const PropertyReviewCard = ({ property, onApprove, onReject, onView }) => {
-  const { title, type, city, price, owner, images, status, createdAt } = property;
+  const { buildingName, accommodationType, city, price, owner, images, status, createdAt } = property;
 
   return (
     <div className="review-card">
       <div className="review-card__image">
         {images && images[0] ? (
-          <img src={`/uploads/${images[0]}`} alt={title} />
+          <img src={images[0]} alt={buildingName} />
         ) : (
           <div className="image-placeholder">🏠</div>
         )}
@@ -16,10 +16,10 @@ const PropertyReviewCard = ({ property, onApprove, onReject, onView }) => {
       </div>
 
       <div className="review-card__body">
-        <h3 className="review-card__title">{title}</h3>
+        <h3 className="review-card__title">{buildingName}</h3>
         <div className="review-card__meta">
           <span>📍 {city}</span>
-          <span>🏷️ {type}</span>
+          <span>🏷️ {accommodationType}</span>
           <span>💰 ₹{price?.toLocaleString()}/mo</span>
         </div>
 

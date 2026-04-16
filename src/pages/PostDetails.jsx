@@ -444,6 +444,30 @@ export default function PostDetails() {
                     </div>
                   </div>
 
+                  {/* Images */}
+                  {post.images && post.images.length > 0 && (
+                    <div style={{ padding: "20px 30px", borderTop: "1px solid #e2e8f0" }}>
+                      <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+                        {post.images.map((image, index) => (
+                          <img
+                            key={index}
+                            src={`http://localhost:5000${image}`}
+                            alt={`Post image ${index + 1}`}
+                            style={{
+                              maxWidth: "200px",
+                              maxHeight: "200px",
+                              objectFit: "cover",
+                              borderRadius: "8px",
+                              border: "1px solid #e2e8f0",
+                              cursor: "pointer"
+                            }}
+                            onClick={() => window.open(`http://localhost:5000${image}`, '_blank')}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
                   {/* Content */}
                   <div style={{ padding: "40px 30px" }}>
                     <div style={{
